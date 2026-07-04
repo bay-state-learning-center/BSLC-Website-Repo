@@ -1357,6 +1357,7 @@ a.link {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  padding: 3.5rem 0;
 }
 
 .staff-stripe.dark {
@@ -1374,7 +1375,6 @@ a.link {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding-top: 3.5rem;
   min-height: 420px;
 }
 
@@ -1413,7 +1413,7 @@ a.link {
 }
 
 .staff-text {
-  padding: 3.5rem 3rem;
+  padding: 0 3rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -1557,6 +1557,17 @@ a.link {
   background: rgba(26,138,138,0.1);
   color: #1a8a8a;
   border-color: rgba(26,138,138,0.25);
+}
+
+.staff-divider-wrap {
+  background: #f0ece3;
+  padding: 0;
+}
+
+.staff-divider {
+  border: none;
+  border-top: 3px solid rgba(42,45,46,0.2);
+  margin: 0 2.5rem;
 }
 
 .board-section {
@@ -2619,6 +2630,8 @@ a.link {
 
   .staff-stripe {
     grid-template-columns: 1fr;
+    padding: 2rem 0;
+    gap: 2rem;
   }
 
   .page-hero + .staff-stripe {
@@ -2628,7 +2641,6 @@ a.link {
   .staff-photo {
     min-height: 300px;
     align-items: center;
-    padding-top: 0;
   }
 
   .staff-photo img {
@@ -2649,7 +2661,7 @@ a.link {
   }
 
   .staff-text {
-    padding: 2rem 1.25rem;
+    padding: 0 1.25rem;
   }
 
   .board-section {
@@ -2789,6 +2801,10 @@ a.link {
   }
 
   .blog-divider {
+    margin: 0 1.25rem;
+  }
+
+  .staff-divider {
     margin: 0 1.25rem;
   }
 
