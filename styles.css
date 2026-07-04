@@ -434,6 +434,14 @@ body.page-index .split-photo img {
   color: #2a2d2e;
 }
 
+.split-text h2 {
+  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0.75rem 0 1.25rem;
+  color: #2a2d2e;
+}
+
 .split-text p {
   font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
   line-height: 1.78;
@@ -523,6 +531,13 @@ body.page-enroll .section-dark {
 .testimonials {
   padding: 4.5rem 2.5rem;
   border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.testimonials h2 {
+  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #e8e4dc;
 }
 
 .section-dark-inner {
@@ -1067,6 +1082,14 @@ body.page-visit .section-cream-inner h2 {
 .calendars-inner {
   max-width: 1080px;
   margin: 0 auto;
+}
+
+.calendars-inner h2 {
+  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0.75rem 0 1.25rem;
+  color: #2a2d2e;
 }
 
 .calendars-grid {
