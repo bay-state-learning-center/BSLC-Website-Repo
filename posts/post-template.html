@@ -6,6 +6,10 @@
 <title><!-- POST TITLE --> — Bay State Learning Center</title>
 <!-- Write a 1-2 sentence description of the post, under ~160 characters -->
 <meta name="description" content="<!-- POST DESCRIPTION -->">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body class="page-blog">
@@ -57,7 +61,7 @@
        Delete this <img> tag entirely if there's no hero image.
        src path: ../images/FILENAME.webp
   ════════════════════════════════════════════════════ -->
-  <img class="post-hero" src="../images/FILENAME.webp" alt="<!-- DESCRIBE THE IMAGE -->">
+  <img class="post-hero" src="../images/FILENAME.webp" alt="<!-- DESCRIBE THE IMAGE -->" fetchpriority="high">
 
   <div class="post-body">
 
@@ -81,7 +85,7 @@
          src path: ../images/FILENAME.webp
     ════════════════════════════════════════════════════ -->
     <figure>
-      <img src="../images/FILENAME.webp" alt="<!-- DESCRIBE THE IMAGE -->">
+      <img src="../images/FILENAME.webp" alt="<!-- DESCRIBE THE IMAGE -->" loading="lazy">
       <figcaption><!-- Optional caption. Delete this line if not needed. --></figcaption>
     </figure>
 
@@ -91,7 +95,7 @@
 
     <!-- Second inline image example -->
     <figure>
-      <img src="../images/FILENAME.webp" alt="<!-- DESCRIBE THE IMAGE -->">
+      <img src="../images/FILENAME.webp" alt="<!-- DESCRIBE THE IMAGE -->" loading="lazy">
       <figcaption><!-- Optional caption. Delete this line if not needed. --></figcaption>
     </figure>
 
