@@ -3,9 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><!-- POST TITLE --> — Bay State Learning Center</title>
-<!-- Write a 1-2 sentence description of the post, under ~160 characters -->
-<meta name="description" content="<!-- POST DESCRIPTION -->">
+<title>{{PAGE_TITLE}} — Bay State Learning Center</title>
+<meta name="description" content="{{DESCRIPTION}}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
@@ -50,56 +49,17 @@
   <a class="post-back" href="../blog.html">&larr; Blog</a>
 
   <div class="post-meta">
-    <span class="post-author">Author Name</span>
-    <span class="post-date">Month DD, YYYY</span>
+    <span class="post-author">{{AUTHOR}}</span>
+    <span class="post-date">{{DATE}}</span>
   </div>
 
-  <h1 class="post-title">Post Title Goes Here</h1>
+  <h1 class="post-title">{{TITLE}}</h1>
 
-  <!-- ═══════════════════════════════════════════════════
-       HERO IMAGE (optional)
-       Delete this <img> tag entirely if there's no hero image.
-       src path: ../images/FILENAME.webp
-  ════════════════════════════════════════════════════ -->
-  <img class="post-hero" src="../images/FILENAME.webp" alt="<!-- DESCRIBE THE IMAGE -->" fetchpriority="high">
+  {{HERO_IMAGE_BLOCK}}
 
   <div class="post-body">
 
-    <!-- ═══════════════════════════════════════════════════
-         BODY CONTENT
-         Replace the lorem ipsum below with your post text.
-         Each paragraph goes in its own <p> tag.
-         Use <em> for italics, <strong> for bold.
-         Use <h2> for section headings, <h3> for sub-headings.
-    ════════════════════════════════════════════════════ -->
-
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-    <!-- ═══════════════════════════════════════════════════
-         INLINE IMAGE
-         To insert an image mid-post, use a <figure> block.
-         Repeat as many times as needed.
-         The <figcaption> is optional — delete it if not using.
-         src path: ../images/FILENAME.webp
-    ════════════════════════════════════════════════════ -->
-    <figure>
-      <img src="../images/FILENAME.webp" alt="<!-- DESCRIBE THE IMAGE -->" loading="lazy">
-      <figcaption><!-- Optional caption. Delete this line if not needed. --></figcaption>
-    </figure>
-
-    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione sequi nesciunt.</p>
-
-    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. Ut labore et dolore magnam aliquam quaerat voluptatem.</p>
-
-    <!-- Second inline image example -->
-    <figure>
-      <img src="../images/FILENAME.webp" alt="<!-- DESCRIBE THE IMAGE -->" loading="lazy">
-      <figcaption><!-- Optional caption. Delete this line if not needed. --></figcaption>
-    </figure>
-
-    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
+{{BODY}}
 
   </div><!-- /post-body -->
 
