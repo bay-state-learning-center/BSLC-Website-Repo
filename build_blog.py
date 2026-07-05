@@ -61,6 +61,9 @@ Frontmatter fields that are optional:
   page_title               — overrides the <title> tag (browser tab / search
                              result title) so it can differ from the on-page
                              H1 heading. Defaults to 'title' if not set.
+
+A line inside the frontmatter block starting with '#' is treated as a
+comment and ignored — useful for leaving guidance notes in a template file.
 """
 
 import re
@@ -72,6 +75,15 @@ DRAFTS_DIR = Path("drafts")
 POSTS_DIR = Path("posts")
 TEMPLATE_PATH = POSTS_DIR / "post-template.html"
 BLOG_INDEX_PATH = Path("blog.html")
+
+# BSLC's production domain. Used to build absolute URLs for og:image /
+# og:url, which social platforms and messaging apps require in full (a
+# relative path like "images/foo.webp" won't work for link-preview cards).
+SITE_URL = "https://www.baystatelearning.org"
+
+# Used as the social-preview image for any post with no hero_image set.
+DEFAULT_OG_IMAGE = "home-01-bslc-logo.webp"
+DEFAULT_OG_IMAGE_ALT = "Bay State Learning Center logo"
 
 START_MARKER = "<!-- POSTS START -->"
 END_MARKER = "<!-- POSTS END -->"
@@ -95,6 +107,8 @@ def parse_frontmatter(text, filename):
     meta = {}
     for line_num, line in enumerate(front.strip().splitlines(), start=1):
         if not line.strip():
+            continue
+        if line.strip().startswith("#"):
             continue
         if ":" not in line:
             raise ValueError(f"frontmatter line {line_num} has no ':' — '{line}'")
@@ -173,21 +187,32 @@ def render_body(markdown_body):
     return "\n\n".join(html_blocks)
 
 
-def render_post_html(meta, body_html, template_text):
+def render_post_html(meta, body_html, template_text, slug):
     hero_block = ""
     if meta.get("hero_image"):
         hero_block = (
             f'<img class="post-hero" src="../images/{meta["hero_image"]}" '
             f'alt="{meta["hero_alt"]}" fetchpriority="high">'
         )
+        og_image, og_image_alt = meta["hero_image"], meta["hero_alt"]
+    else:
+        og_image, og_image_alt = DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_ALT
+
+    page_title = meta.get("page_title") or meta["title"]
+    post_url = f"{SITE_URL}/posts/{slug}.html"
+    og_image_url = f"{SITE_URL}/images/{og_image}"
+
     html = template_text
-    html = html.replace("{{PAGE_TITLE}}", meta.get("page_title") or meta["title"])
+    html = html.replace("{{PAGE_TITLE}}", page_title)
     html = html.replace("{{TITLE}}", meta["title"])
     html = html.replace("{{DESCRIPTION}}", meta["description"])
     html = html.replace("{{AUTHOR}}", meta["author"])
     html = html.replace("{{DATE}}", format_date(meta["date"]))
     html = html.replace("{{HERO_IMAGE_BLOCK}}", hero_block)
     html = html.replace("{{BODY}}", body_html)
+    html = html.replace("{{POST_URL}}", post_url)
+    html = html.replace("{{OG_IMAGE_URL}}", og_image_url)
+    html = html.replace("{{OG_IMAGE_ALT}}", og_image_alt)
     return html
 
 
@@ -267,7 +292,7 @@ def main():
 
     for meta, slug, body_md, _ in posts:
         body_html = render_body(body_md)
-        post_html = render_post_html(meta, body_html, template_text)
+        post_html = render_post_html(meta, body_html, template_text, slug)
         out_path = POSTS_DIR / f"{slug}.html"
         out_path.write_text(post_html, encoding="utf-8")
         print(f"Wrote {out_path}")
