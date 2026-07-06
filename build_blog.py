@@ -107,7 +107,10 @@ def parse_frontmatter(text, filename):
     front, body = match.groups()
     meta = {}
     for line_num, line in enumerate(front.strip().splitlines(), start=1):
-        if not line.strip():
+        stripped = line.strip()
+        if not stripped:
+            continue
+        if stripped.startswith("#"):
             continue
         if ":" not in line:
             raise ValueError(f"frontmatter line {line_num} has no ':' — '{line}'")
