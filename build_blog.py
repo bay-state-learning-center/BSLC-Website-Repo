@@ -98,17 +98,16 @@ def slugify(title):
 
 
 def parse_frontmatter(text, filename):
-    if not text.lstrip().startswith("---"):
-        raise ValueError("missing opening '---' frontmatter delimiter")
-    parts = text.lstrip().split("---", 2)
-    if len(parts) < 3:
+    text = text.lstrip()
+    match = re.match(r"^---[ \t]*\n(.*?)\n---[ \t]*\n?(.*)$", text, re.DOTALL)
+    if not match:
+        if not text.startswith("---"):
+            raise ValueError("missing opening '---' frontmatter delimiter")
         raise ValueError("frontmatter block is not closed with a second '---'")
-    _, front, body = parts
+    front, body = match.groups()
     meta = {}
     for line_num, line in enumerate(front.strip().splitlines(), start=1):
         if not line.strip():
-            continue
-        if line.strip().startswith("#"):
             continue
         if ":" not in line:
             raise ValueError(f"frontmatter line {line_num} has no ':' — '{line}'")

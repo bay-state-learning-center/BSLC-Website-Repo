@@ -7,7 +7,7 @@
 #      -- important: files starting with _ or . are ignored and won't be
 #      published, so make sure the new file's name does NOT start with _
 #   3. Fill in the fields below, then write your post underneath the
-#      second --- at the bottom.
+#      triple hyphen line below, after the front matter.
 #   4. Commit and push. The site rebuilds itself automatically.
 
 title: Your Post Title Here
