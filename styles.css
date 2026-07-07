@@ -240,24 +240,21 @@ nav {
 }
 
 /* Visit page has no "Schedule a visit" button in the nav, so it gets
-   extra padding to keep the bar the same height as the other pages.
-   NOTE: padding and gap are restated here (rather than inherited from
-   the nav rule above) because these page-scoped rules outrank the
-   mobile nav rules — so on visit and blog pages the nav keeps its
-   desktop padding at phone widths. That matches the previous
-   stylesheet's behavior; delete padding/gap from these two rules if
-   you'd rather have the mobile nav sizing apply on these pages too. */
+   extra padding on desktop to keep the bar the same height as the
+   other pages. The matching mobile reset lives in the 700px media
+   query at the bottom of the file, since at phone widths every page
+   just shows the hamburger and this compensation no longer applies. */
 body.page-visit nav {
   padding: 1.65rem 2.5rem;
   gap: 2rem;
 }
 
 /* Blog pages have a cream <body>, so the nav needs its dark background
-   set explicitly. */
+   set explicitly. Padding/gap aren't restated here — they'd just
+   duplicate the base nav rule's values, and doing so would have
+   outranked the mobile nav rule below. */
 body.page-blog nav {
   background: var(--charcoal);
-  padding: 1.1rem 2.5rem;
-  gap: 2rem;
 }
 
 .nav-logo {
@@ -354,9 +351,10 @@ body.page-blog nav {
   text-align: center;
 }
 
-/* NOTE: full padding is restated here; because this rule outranks the
-   mobile .hero rule, these two heroes keep desktop padding at phone
-   widths (matching the previous stylesheet's behavior). */
+/* Padding here differs from the base .hero rule (tighter bottom
+   spacing for the logo block), so it's kept for desktop widths. The
+   matching mobile reset lives in the 640px media query at the bottom
+   of the file. */
 body.page-index .hero,
 body.page-how-it-works .hero {
   max-width: none;
@@ -613,11 +611,10 @@ body.page-volunteer-donate .section-cream-inner p {
   min-height: 400px;
 }
 
-/* min-height restated so the mobile 260px rule doesn't apply on the
-   index page (matches previous behavior). */
+/* max-height is the only thing unique to the index page here; the
+   min-height matched the base rule already and isn't needed. */
 body.page-index .split-photo img {
   max-height: 100vh;
-  min-height: 400px;
 }
 
 .split-text {
@@ -809,13 +806,6 @@ footer {
   background: var(--charcoal-deep);
   padding: 3rem 2.5rem 0;
   border-top: 1px solid var(--line-dark);
-}
-
-/* Outranks the mobile footer rule, so the volunteer/donate footer keeps
-   desktop padding at phone widths (matches previous behavior — likely
-   safe to delete if you'd rather it match the other pages). */
-body.page-volunteer-donate footer {
-  padding: 3rem 2.5rem 0;
 }
 
 .footer-grid {
@@ -2101,6 +2091,14 @@ body.page-volunteer-donate footer {
     padding: 2.5rem 1.25rem 2rem;
   }
 
+  /* The index/how-it-works hero override (near the top of this file)
+     outranks the rule above, so it's reset here to match every other
+     page's mobile hero padding. */
+  body.page-index .hero,
+  body.page-how-it-works .hero {
+    padding: 2.5rem 1.25rem 2rem;
+  }
+
   .section-dark,
   .section-cream {
     padding: 3rem 1.25rem;
@@ -2148,8 +2146,9 @@ body.page-volunteer-donate footer {
     gap: 2rem;
   }
 
-  /* .sample-day keeps its desktop padding on mobile: the previous
-     stylesheet's mobile padding rule was outranked and never applied. */
+  .sample-day {
+    padding: 3rem 1.25rem;
+  }
 
   .sample-day-inner {
     grid-template-columns: 1fr;
@@ -2322,12 +2321,18 @@ body.page-volunteer-donate footer {
 
 /* The nav and footer collapse at 700px on ALL pages (the blog's
    two-column entry layout also stacks here, so blog pages change all at
-   once). Exceptions: the visit/blog nav and volunteer-donate footer
-   rules near the top of the file outrank these and keep their desktop
-   padding — see the notes on those rules. */
+   once). */
 @media (max-width: 700px) {
 
   nav {
+    padding: 1rem 1.25rem;
+    gap: 0;
+  }
+
+  /* The visit page's extra desktop padding (near the top of this file)
+     outranks the rule above, so it's reset here to match every other
+     page's mobile nav. */
+  body.page-visit nav {
     padding: 1rem 1.25rem;
     gap: 0;
   }
