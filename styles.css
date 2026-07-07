@@ -696,12 +696,6 @@ body.page-index .split-text p {
   border-top: 1px solid var(--line-dark);
 }
 
-.testimonial-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;
-}
-
 .testimonial blockquote {
   margin-bottom: 1rem;
   font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.3rem);
@@ -987,6 +981,47 @@ footer {
 
 .carousel-dot.active {
   background: var(--logo-orange);
+}
+
+/* Arrows disable (rather than wrap) once a carousel reaches either end.
+   Used by any carousel with data-loop="false" — currently just the
+   testimonial carousel below. */
+.carousel-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.carousel-btn:disabled:hover {
+  background: rgba(26,29,30,0.65);
+}
+
+
+/* ---------- TESTIMONIALS CAROUSEL (index.html) ----------
+   Reuses the .carousel/.carousel-track/.carousel-slide engine above,
+   but the slides hold text instead of a fixed-ratio photo, and more
+   than one slide is visible at once on desktop. carousel.js reads
+   data-per-view to size slides in JS (since the number of "stops" —
+   and therefore the dot count — changes depending on how many slides
+   are visible at once, which isn't something CSS alone can drive). */
+
+.carousel--text .carousel-track-wrap {
+  aspect-ratio: auto;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+.carousel--text .carousel-track {
+  align-items: stretch;
+}
+
+.carousel--text .carousel-slide {
+  height: auto;
+  padding: 0 1.25rem;
+}
+
+/* Keeps the arrows clear of the card edges and off the dots row below. */
+.carousel--text .carousel-btn {
+  top: 45%;
 }
 
 
@@ -2139,11 +2174,6 @@ footer {
 
   .testimonials {
     padding: 3rem 1.25rem;
-  }
-
-  .testimonial-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
   }
 
   .sample-day {

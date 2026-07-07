@@ -99,7 +99,7 @@
       <p>Here's a sample day based on a typical Tuesday during the 2025&ndash;2026 year. Although we have classes and activities scheduled throughout the day, everything is voluntary.</p>
       <p>Members make their own schedules. They might use blocks of time for independent study, to meet with a mentor one-on-one, or to go on a walk with friends. We offer lots of structure, and members get to choose how they want to opt in.</p>
       <div class="sample-day-photo" style="margin-top:2rem;">
-        <div class="carousel" id="sampleCarousel">
+        <div class="carousel" data-per-view="1" data-autoplay="true" data-loop="true">
           <div class="carousel-track-wrap">
             <div class="carousel-track">
               <div class="carousel-slide"><img src="images/carousel-1-worm-bin.webp" alt="Members examining a skink during a biology activity" style="object-position: top;" loading="lazy"></div>
@@ -112,14 +112,7 @@
           </div>
           <button class="carousel-btn carousel-prev" aria-label="Previous photo">&#8249;</button>
           <button class="carousel-btn carousel-next" aria-label="Next photo">&#8250;</button>
-          <div class="carousel-dots">
-            <button class="carousel-dot active" aria-label="Photo 1"></button>
-            <button class="carousel-dot" aria-label="Photo 2"></button>
-            <button class="carousel-dot" aria-label="Photo 3"></button>
-            <button class="carousel-dot" aria-label="Photo 4"></button>
-            <button class="carousel-dot" aria-label="Photo 5"></button>
-            <button class="carousel-dot" aria-label="Photo 6"></button>
-          </div>
+          <div class="carousel-dots"></div>
         </div>
       </div>
     </div>
@@ -230,59 +223,7 @@
     });
   })();
 </script>
-
-  <script>
-    (function() {
-      var carousel = document.getElementById('sampleCarousel');
-      if (!carousel) return;
-      var track = carousel.querySelector('.carousel-track');
-      var dots = carousel.querySelectorAll('.carousel-dot');
-      var current = 0;
-      var total = dots.length;
-      var autoTimer = null;
-      var paused = false;
-
-      function goTo(n) {
-        current = (n + total) % total;
-        track.style.transform = 'translateX(-' + (current * 100) + '%)';
-        dots.forEach(function(d, i) {
-          d.classList.toggle('active', i === current);
-        });
-      }
-
-      function stopAuto() {
-        if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
-      }
-
-      function startAuto() {
-        stopAuto();
-        if (!paused) {
-          autoTimer = setInterval(function() { goTo(current + 1); }, 4500);
-        }
-      }
-
-      carousel.querySelector('.carousel-next').addEventListener('click', function() {
-        goTo(current + 1); startAuto();
-      });
-      carousel.querySelector('.carousel-prev').addEventListener('click', function() {
-        goTo(current - 1); startAuto();
-      });
-      dots.forEach(function(dot, i) {
-        dot.addEventListener('click', function() { goTo(i); startAuto(); });
-      });
-
-      carousel.addEventListener('mouseenter', function() { paused = true; stopAuto(); });
-      carousel.addEventListener('mouseleave', function() { paused = false; startAuto(); });
-
-      // Keyboard users can't trigger mouseenter/mouseleave, so pause on focus too.
-      carousel.addEventListener('focusin', function() { paused = true; stopAuto(); });
-      carousel.addEventListener('focusout', function(e) {
-        if (!carousel.contains(e.relatedTarget)) { paused = false; startAuto(); }
-      });
-
-      startAuto();
-    })();
-  </script>
+<script src="carousel.js"></script>
 
 </body>
 </html>
