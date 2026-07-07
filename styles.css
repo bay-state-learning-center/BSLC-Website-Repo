@@ -1019,6 +1019,12 @@ footer {
   padding: 0 1.25rem;
 }
 
+/* Side padding gives the arrows their own gutter, clear of the card
+   text, instead of floating on top of it the way they do over a photo. */
+.carousel--text {
+  padding: 0 3.5rem;
+}
+
 /* Keeps the arrows clear of the card edges and off the dots row below. */
 .carousel--text .carousel-btn {
   top: 45%;
@@ -2175,6 +2181,22 @@ footer {
   .testimonials {
     padding: 3rem 1.25rem;
   }
+
+  /* Smaller gutter and buttons on narrow phones, so the arrows don't
+     eat too much of the available card width. Scoped to .carousel--text
+     so the how-it-works photo carousel is untouched. */
+  .carousel--text {
+    padding: 0 2.4rem;
+  }
+
+  .carousel--text .carousel-btn {
+    width: 1.9rem;
+    height: 1.9rem;
+    font-size: 1.1rem;
+  }
+
+  .carousel--text .carousel-prev { left: 0.25rem; }
+  .carousel--text .carousel-next { right: 0.25rem; }
 
   .sample-day {
     padding: 3rem 1.25rem;
