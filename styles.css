@@ -1591,7 +1591,7 @@ footer {
   grid-template-columns: auto 1fr;
   gap: 1.5rem;
   margin: 2.5rem 0;
-  align-items: stretch;
+  align-items: start;
 }
 
 .tuition-total {
@@ -1636,10 +1636,10 @@ footer {
   border: 1px solid rgba(232,114,74,0.3);
   border-radius: 3px;
   padding: 2rem 2rem;
-  display: grid;
-  grid-template-columns: 1fr auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 1.5rem;
-  align-items: center;
 }
 
 .aid-band-text h3 {
@@ -2318,14 +2318,6 @@ footer {
   .payment-details {
     grid-template-columns: 1fr;
     gap: 1.5rem;
-  }
-
-  .aid-band {
-    grid-template-columns: 1fr;
-  }
-
-  .aid-band-actions {
-    justify-self: start;
   }
 
   .hero-cta {
