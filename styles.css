@@ -3,13 +3,14 @@
    Single shared stylesheet for all pages.
 
    Structure:
-     1. Fonts & reset
-     2. Utility classes (labels, buttons)
-     3. Body theme (+ per-page overrides)
-     4. Navigation
-     5. Shared layout components (hero, sections, split-stripe, etc.)
+     1. Design tokens (colors + type scale as CSS variables)
+     2. Fonts & reset
+     3. Utility classes (labels, buttons, small links)
+     4. Navigation (+ mobile menu)
+     5. Shared layout components (hero, sections, stripes, headings, body text)
         Where a page needs a different value, the override is scoped with
-        the page's body class, e.g. body.page-enroll .hero { ... }
+        the page's body class, e.g. body.page-enroll .hero { ... }, and
+        contains ONLY the properties that differ from the shared rule.
      6. Footer
      7. Page-specific styles, one section per page
      8. Responsive / mobile rules
@@ -19,7 +20,65 @@
    ========================================================================= */
 
 
-/* ---------- Fonts, reset, utilities, nav, footer, shared components ---------- */
+/* =========================================================================
+   1. DESIGN TOKENS
+   Change a color or a font size here and it changes everywhere.
+   ========================================================================= */
+
+:root {
+  /* Brand palette (the four letters of the BSLC logo) */
+  --logo-orange: #EF9F27;
+  --logo-pink:   #D4537E;
+  --logo-teal:   #3ABCB0;
+  --logo-coral:  #E8724A;
+
+  /* Surfaces */
+  --charcoal:      #2a2d2e;  /* dark page/section background; also headings & text on cream */
+  --charcoal-deep: #1e2122;  /* footer, mobile menu */
+  --cream:         #f0ece3;  /* light section background */
+
+  /* Accents */
+  --teal:        #30b0b0;  /* buttons and links on dark backgrounds */
+  --teal-dark:   #1a8a8a;  /* teal links on cream (darker for contrast) */
+  --orange-dark: #c06020;  /* orange links on cream (darker for contrast) */
+
+  /* Text on dark backgrounds — "paper" tones, brightest to faintest */
+  --paper:        #e8e4dc;                 /* headings */
+  --paper-bright: rgba(232,228,220,0.95);  /* active nav link, bolded schedule items */
+  --paper-strong: rgba(232,228,220,0.75);  /* schedule text, form checkboxes */
+  --paper-body:   rgba(232,228,220,0.7);   /* standard body text */
+  --paper-mid:    rgba(232,228,220,0.65);  /* labels, secondary text */
+  --paper-soft:   rgba(232,228,220,0.6);   /* nav links */
+  --paper-dim:    rgba(232,228,220,0.55);  /* footer text */
+  --paper-faint:  rgba(232,228,220,0.45);  /* social icons */
+
+  /* Text on cream backgrounds — "ink" tones */
+  --ink-body: #3a3d3e;             /* standard body text */
+  --ink-lead: #4a4d4e;             /* lead paragraphs (direct children of section inners) */
+  --ink-mid:  rgba(42,45,46,0.7);  /* dates, small labels, secondary text */
+
+  /* Hairline borders */
+  --line-dark:       rgba(255,255,255,0.06);  /* on charcoal */
+  --line-cream:      rgba(42,45,46,0.1);      /* on cream */
+  --line-cream-soft: rgba(42,45,46,0.08);     /* on cream, softer */
+
+  /* Type scale (fluid sizes; min, preferred, max) */
+  --fs-body:   clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);    /* standard paragraph */
+  --fs-h2:     clamp(1.4rem, 1.1rem + 1.2vw, 2rem);       /* section heading */
+  --fs-h3:     clamp(1rem, 0.9rem + 0.4vw, 1.25rem);      /* card heading */
+  --fs-label:  clamp(0.75rem, 0.65rem + 0.3vw, 0.9rem);   /* uppercase labels */
+  --fs-meta:   clamp(0.72rem, 0.65rem + 0.25vw, 0.85rem); /* bylines, dates */
+  --fs-mini:   clamp(0.75rem, 0.68rem + 0.2vw, 0.88rem);  /* small uppercase links */
+  --fs-btn:    clamp(0.95rem, 0.85rem + 0.35vw, 1.15rem); /* large buttons */
+  --fs-btn-sm: clamp(0.82rem, 0.75rem + 0.25vw, 1rem);    /* nav button */
+  --fs-nav:    clamp(0.9rem, 0.85rem + 0.2vw, 1.05rem);   /* nav links */
+  --fs-footer: clamp(0.82rem, 0.75rem + 0.2vw, 0.95rem);  /* footer text */
+}
+
+
+/* =========================================================================
+   2. FONTS & RESET
+   ========================================================================= */
 
 /* Outfit font is loaded via <link rel="preload"/stylesheet"> tags in each
    page's <head> instead of @import — @import blocks the parser from
@@ -35,92 +94,173 @@
 
 body {
   font-family: 'Outfit', sans-serif;
-  background: #2a2d2e;
-  color: #e8e4dc;
+  background: var(--charcoal);
+  color: var(--paper);
   width: 100%;
 }
 
+/* Blog pages (listing + posts) are cream with a dark nav. */
 body.page-blog {
-  font-family: 'Outfit', sans-serif;
-  background: #f0ece3;
-  color: #2a2d2e;
-  width: 100%;
+  background: var(--cream);
+  color: var(--charcoal);
 }
+
+
+/* =========================================================================
+   3. UTILITY CLASSES
+   ========================================================================= */
 
 .label-sm {
-  font-size: clamp(0.75rem, 0.65rem + 0.3vw, 0.9rem);
+  font-size: var(--fs-label);
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(232,228,220,0.65);
+  color: var(--paper-mid);
 }
 
-.label-section {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.3rem);
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(232,228,220,0.65);
-  margin-top: 0;
-  margin-bottom: 1.25rem;
-}
+/* -- Buttons: shared base, then per-variant color/size -- */
 
-body.page-index .label-section,
-body.page-how-it-works .label-section,
-body.page-about-us .label-section,
-body.page-blog .label-section {
-  margin-bottom: initial;
-}
-
-.label-section-dark {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.3rem);
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(42,45,46,0.7);
-  margin-top: 0;
-  margin-bottom: 1.25rem;
-}
-
-body.page-index .label-section-dark,
-body.page-how-it-works .label-section-dark,
-body.page-about-us .label-section-dark {
-  margin-bottom: initial;
+.btn-teal,
+.btn-teal-large,
+.btn-orange-large,
+.vol-submit {
+  display: inline-block;
+  font-family: inherit;   /* <button>/<input> don't inherit the body font by default */
+  font-weight: 600;
+  color: #1a1a1a;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .btn-teal {
-  display: inline-block;
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.82rem, 0.75rem + 0.25vw, 1rem);
-  font-weight: 600;
+  font-size: var(--fs-btn-sm);
   letter-spacing: 0.05em;
-  color: #1a1a1a;
-  background-color: #30b0b0;
-  border: 2px solid #30b0b0;
   padding: 0.55rem 1.3rem;
-  border-radius: 2px;
-  cursor: pointer;
   white-space: nowrap;
+}
+
+.btn-teal-large,
+.btn-orange-large,
+.vol-submit {
+  font-size: var(--fs-btn);
+  letter-spacing: 0.07em;
+  padding: 0.8rem 2.4rem;
+}
+
+.btn-teal,
+.btn-teal-large,
+.vol-submit {
+  background-color: var(--teal);
+  border: 2px solid var(--teal);
+}
+
+.btn-orange-large {
+  background-color: var(--logo-coral);
+  border: 2px solid var(--logo-coral);
+}
+
+/* -- Small uppercase text links ("See how it works →" etc.) -- */
+
+.more-btn-dark,
+.more-btn-orange {
+  display: inline-block;
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding-bottom: 2px;
+  align-self: flex-start;
+}
+
+.more-btn-dark {
+  color: var(--teal-dark);
+  border-bottom: 1px solid rgba(26,138,138,0.4);
+}
+
+.more-btn-orange {
+  color: var(--orange-dark);
+  border-bottom: 1px solid rgba(192,96,32,0.4);
+}
+
+/* Same idea, slightly smaller/bolder: enroll steps + calendar footers */
+.step-link,
+.step-link-orange,
+.cal-open-link {
+  display: inline-block;
+  font-size: var(--fs-mini);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding-bottom: 2px;
+}
+
+.step-link,
+.cal-open-link {
+  color: var(--teal-dark);
+  border-bottom: 1px solid rgba(26,138,138,0.4);
+}
+
+.step-link-orange {
+  color: var(--orange-dark);
+  border-bottom: 1px solid rgba(192,96,32,0.4);
+}
+
+.step-body .step-link,
+.step-body .step-link-orange {
+  margin-top: 0.85rem;
+}
+
+/* Inline links */
+a.link {
+  color: var(--teal);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.contact-inline {
+  color: var(--teal-dark);
   text-decoration: none;
 }
 
-.btn-teal-large {
-  display: inline-block;
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.95rem, 0.85rem + 0.35vw, 1.15rem);
-  font-weight: 600;
-  letter-spacing: 0.07em;
-  color: #1a1a1a;
-  background-color: #30b0b0;
-  border: 2px solid #30b0b0;
-  padding: 0.8rem 2.4rem;
-  border-radius: 2px;
-  cursor: pointer;
-  text-decoration: none;
+
+/* =========================================================================
+   4. NAVIGATION
+   ========================================================================= */
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.1rem 2.5rem;
+  border-bottom: 1px solid var(--line-dark);
+  gap: 2rem;
+}
+
+/* Visit page has no "Schedule a visit" button in the nav, so it gets
+   extra padding to keep the bar the same height as the other pages.
+   NOTE: padding and gap are restated here (rather than inherited from
+   the nav rule above) because these page-scoped rules outrank the
+   mobile nav rules — so on visit and blog pages the nav keeps its
+   desktop padding at phone widths. That matches the previous
+   stylesheet's behavior; delete padding/gap from these two rules if
+   you'd rather have the mobile nav sizing apply on these pages too. */
+body.page-visit nav {
+  padding: 1.65rem 2.5rem;
+  gap: 2rem;
+}
+
+/* Blog pages have a cream <body>, so the nav needs its dark background
+   set explicitly. */
+body.page-blog nav {
+  background: var(--charcoal);
+  padding: 1.1rem 2.5rem;
+  gap: 2rem;
 }
 
 .nav-logo {
-  font-family: 'Outfit', sans-serif;
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -129,49 +269,10 @@ body.page-about-us .label-section-dark {
   flex-shrink: 0;
 }
 
-.nl-b {
-  color: #EF9F27;
-}
-
-.nl-s {
-  color: #D4537E;
-}
-
-.nl-l {
-  color: #3ABCB0;
-}
-
-.nl-c {
-  color: #E8724A;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.1rem 2.5rem;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  gap: 2rem;
-}
-
-body.page-visit nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.65rem 2.5rem;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  gap: 2rem;
-}
-
-body.page-blog nav {
-  background: #2a2d2e;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.1rem 2.5rem;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  gap: 2rem;
-}
+.nl-b { color: var(--logo-orange); }
+.nl-s { color: var(--logo-pink); }
+.nl-l { color: var(--logo-teal); }
+.nl-c { color: var(--logo-coral); }
 
 .nav-links {
   display: flex;
@@ -180,14 +281,14 @@ body.page-blog nav {
 }
 
 .nav-links a {
-  font-size: clamp(0.9rem, 0.85rem + 0.2vw, 1.05rem);
-  color: rgba(232,228,220,0.6);
+  font-size: var(--fs-nav);
+  color: var(--paper-soft);
   text-decoration: none;
   letter-spacing: 0.04em;
 }
 
 .nav-links a.nav-active {
-  color: rgba(232,228,220,0.95);
+  color: var(--paper-bright);
 }
 
 .nav-right {
@@ -198,7 +299,7 @@ body.page-blog nav {
 }
 
 .hamburger {
-  display: none;
+  display: none;   /* shown at mobile widths */
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
@@ -211,14 +312,14 @@ body.page-blog nav {
   display: block;
   width: 22px;
   height: 1.5px;
-  background: rgba(232,228,220,0.75);
+  background: var(--paper-strong);
 }
 
 .mobile-menu {
-  display: none;
+  display: none;   /* toggled to flex by the hamburger script */
   flex-direction: column;
-  background: #1e2122;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
+  background: var(--charcoal-deep);
+  border-bottom: 1px solid var(--line-dark);
 }
 
 .mobile-menu.open {
@@ -226,8 +327,8 @@ body.page-blog nav {
 }
 
 .mobile-menu a {
-  font-size: clamp(0.9rem, 0.85rem + 0.2vw, 1.05rem);
-  color: rgba(232,228,220,0.7);
+  font-size: var(--fs-nav);
+  color: var(--paper-body);
   text-decoration: none;
   padding: 0.9rem 1.5rem;
   border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -238,6 +339,13 @@ body.page-blog nav {
   border-bottom: none;
 }
 
+
+/* =========================================================================
+   5. SHARED LAYOUT COMPONENTS
+   ========================================================================= */
+
+/* -- Hero -- */
+
 .hero,
 .page-hero {
   padding: 4rem 2.5rem 3.5rem;
@@ -246,10 +354,13 @@ body.page-blog nav {
   text-align: center;
 }
 
+/* NOTE: full padding is restated here; because this rule outranks the
+   mobile .hero rule, these two heroes keep desktop padding at phone
+   widths (matching the previous stylesheet's behavior). */
 body.page-index .hero,
 body.page-how-it-works .hero {
-  max-width: initial;
-  margin: initial;
+  max-width: none;
+  margin: 0;
   padding: 4rem 2.5rem 2.5rem;
   display: flex;
   flex-direction: column;
@@ -284,59 +395,202 @@ body.page-after-bslc .hero {
   line-height: 1.18;
   letter-spacing: -0.01em;
   margin: 0.75rem 0 1.5rem;
-  color: #e8e4dc;
+  color: var(--paper);
 }
 
-body.page-index .hero h1 {
-  font-size: clamp(1.7rem, 1.0rem + 3vw, 3.2rem);
-  font-weight: 700;
-  line-height: 1.18;
-  letter-spacing: -0.01em;
-  margin: 0 0 1rem;
-  color: #e8e4dc;
-}
-
+body.page-index .hero h1,
 body.page-how-it-works .hero h1 {
-  font-size: clamp(1.7rem, 1.0rem + 3vw, 3.2rem);
-  font-weight: 700;
-  line-height: 1.18;
-  letter-spacing: -0.01em;
+  font-size: clamp(1.7rem, 1rem + 3vw, 3.2rem);
   margin: 0 0 1rem;
-  color: #e8e4dc;
 }
 
 .hero h1 .teal {
-  color: #30b0b0;
+  color: var(--teal);
 }
 
 .hero h1 .coral {
-  color: #e4843c;
-}
-
-body.page-classes-calendar .hero h1 .coral {
-  color: #E8724A;
+  color: #e4843c;   /* softened coral, used in the index hero only */
 }
 
 .hero p,
 .page-hero p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
+  font-size: var(--fs-body);
   line-height: 1.78;
-  color: rgba(232,228,220,0.7);
+  color: var(--paper-body);
   max-width: 680px;
   margin: 0 auto;
 }
 
 body.page-volunteer-donate .hero p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.78;
-  color: rgba(232,228,220,0.7);
-  max-width: 680px;
-  margin: 0 auto 2rem;
+  margin-bottom: 2rem;   /* clears the hero text from the section below */
 }
+
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2.25rem;
+}
+
+/* -- Section shells: dark and cream bands with a centered inner column -- */
+
+.section-dark {
+  background: var(--charcoal);
+  padding: 4rem 2.5rem;
+  border-top: 1px solid var(--line-dark);
+}
+
+body.page-classes-calendar .section-dark,
+body.page-enroll .section-dark {
+  padding: 4.5rem 2.5rem;
+}
+
+.section-dark-inner {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+body.page-classes-calendar .section-dark-inner {
+  max-width: 1040px;
+}
+
+body.page-enroll .section-dark-inner,
+body.page-enroll .section-cream-inner {
+  max-width: 860px;
+}
+
+.section-cream {
+  background: var(--cream);
+  padding: 4rem 2.5rem;
+}
+
+.section-cream-inner {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+/* -- Section headings (h2): one shared style, then color by background
+      and a handful of margin exceptions -- */
+
+.section-dark-inner h2,
+.sample-day-intro h2,
+.testimonials h2,
+.ll-section-inner h2,
+.split-text h2,
+.pillar-text h2,
+.section-cream-inner h2,
+.calendars-inner h2,
+.steps-intro h2,
+.board-section-header h2,
+.donate-text h2,
+.form-section-inner h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0.75rem 0 1.25rem;
+}
+
+.section-dark-inner h2,
+.sample-day-intro h2,
+.testimonials h2,
+.ll-section-inner h2 {
+  color: var(--paper);
+}
+
+.split-text h2,
+.pillar-text h2,
+.section-cream-inner h2,
+.calendars-inner h2,
+.steps-intro h2,
+.board-section-header h2,
+.donate-text h2,
+.form-section-inner h2 {
+  color: var(--charcoal);
+}
+
+.testimonials h2       { margin: 0; }             /* spacing handled inline in the HTML */
+.ll-section-inner h2   { margin: 0 0 1.25rem; }
+.steps-intro h2        { margin: 0 0 1rem; }
+.board-section-header h2 { margin: 0.5rem 0 0; }
+.form-section-inner h2 { margin-bottom: 0.5rem; }
+
+body.page-enroll .section-cream-inner h2 {
+  font-size: clamp(1.4rem, 1.1rem + 1vw, 1.9rem);
+  margin: 0 0 1rem;
+}
+
+body.page-visit .section-cream-inner h2 {
+  margin-bottom: 1.5rem;
+}
+
+/* -- Body paragraphs: one shared style per background, then exceptions.
+      "Lead" paragraphs (direct children of a section inner, targeted
+      with >) sit directly under the h2 and get their own margins. -- */
+
+/* On dark */
+.section-dark-inner p,
+.section-dark-intro p {
+  font-size: var(--fs-body);
+  line-height: 1.78;
+  color: var(--paper-body);
+}
+
+.section-dark-inner p + p,
+.section-dark-intro p + p {
+  margin-top: 1rem;
+}
+
+.section-dark-inner > p {
+  margin-bottom: 1.5rem;
+}
+
+.section-dark-inner > p:last-of-type {
+  margin-bottom: 0;
+}
+
+body.page-volunteer-donate .section-dark-inner p {
+  max-width: 640px;
+  margin-bottom: 2rem;
+}
+
+/* On cream */
+.split-text p,
+.pillar-text p,
+.section-cream-inner p,
+.visit-step-body p,
+.donate-text p,
+.college-note {
+  font-size: var(--fs-body);
+  line-height: 1.78;
+  color: var(--ink-body);
+}
+
+.section-cream-inner p + p,
+.pillar-text p + p {
+  margin-top: 1rem;
+}
+
+.section-cream-inner > p {
+  color: var(--ink-lead);
+  margin-bottom: 1.25rem;
+}
+
+.section-cream-inner > p:last-of-type {
+  margin-bottom: 0;
+}
+
+body.page-volunteer-donate .section-cream-inner p {
+  color: var(--ink-body);   /* must restate: outranks the --ink-lead rule above */
+  max-width: 640px;
+  margin-bottom: 2rem;
+}
+
+/* -- Split stripes (index: photo + text side by side) -- */
 
 .split-stripe {
   width: 100%;
-  background: #f0ece3;
+  background: var(--cream);
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-top: 3rem;
@@ -359,13 +613,10 @@ body.page-volunteer-donate .hero p {
   min-height: 400px;
 }
 
+/* min-height restated so the mobile 260px rule doesn't apply on the
+   index page (matches previous behavior). */
 body.page-index .split-photo img {
-  width: 100%;
-  height: 100%;
   max-height: 100vh;
-  object-fit: cover;
-  object-position: center;
-  display: block;
   min-height: 400px;
 }
 
@@ -374,300 +625,41 @@ body.page-index .split-photo img {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #2a2d2e;
-}
-
-.split-text h2 {
-  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
-  font-weight: 700;
-  line-height: 1.2;
-  margin: 0.75rem 0 1.25rem;
-  color: #2a2d2e;
+  color: var(--charcoal);
 }
 
 .split-text p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.78;
-  color: #3a3d3e;
   margin-bottom: 1.75rem;
 }
 
 body.page-index .split-text p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.78;
-  color: #3a3d3e;
   margin-bottom: 1rem;
 }
 
 .split-text p .accent-teal {
-  color: #1a8a8a;
+  color: var(--teal-dark);
 }
 
 .split-text p .accent-orange {
-  color: #c06020;
+  color: var(--orange-dark);
 }
 
 .split-text .label-sm {
-  color: rgba(42,45,46,0.7);
+  color: var(--ink-mid);
   margin-bottom: 1rem;
 }
 
-.more-btn-orange {
-  display: inline-block;
-  margin-top: 1.75rem;
-  font-size: clamp(0.75rem, 0.65rem + 0.3vw, 0.9rem);
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #c06020;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(192,96,32,0.4);
-  padding-bottom: 2px;
-  align-self: flex-start;
-}
-
-body.page-index .more-btn-orange {
-  margin-top: initial;
-}
-
-.more-btn-dark {
-  display: inline-block;
-  font-size: clamp(0.75rem, 0.65rem + 0.3vw, 0.9rem);
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #1a8a8a;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(26,138,138,0.4);
-  padding-bottom: 2px;
-  align-self: flex-start;
-}
-
-.section-dark {
-  background: #2a2d2e;
-  padding: 4rem 2.5rem;
-  border-top: 1px solid rgba(255,255,255,0.06);
-}
-
-body.page-classes-calendar .section-dark,
-body.page-enroll .section-dark {
-  padding: 4.5rem 2.5rem;
-}
-
-.testimonials {
-  padding: 4.5rem 2.5rem;
-  border-top: 1px solid rgba(255,255,255,0.06);
-}
-
-.testimonials h2 {
-  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
-  font-weight: 700;
-  line-height: 1.2;
-  color: #e8e4dc;
-}
-
-.section-dark-inner {
-  max-width: 820px;
-  margin: 0 auto;
-}
-
-body.page-classes-calendar .section-dark-inner {
-  max-width: 1040px;
-}
-
-body.page-enroll .section-dark-inner,
-body.page-enroll .section-cream-inner {
-  max-width: 860px;
-}
-
-.testimonials-label {
-}
-
-.testimonial-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;
-}
-
-.testimonial blockquote {
-  margin-bottom: 1rem;
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.3rem);
-  line-height: 1.72;
-  color: rgba(232,228,220,0.72);
-  font-style: italic;
-  font-weight: 300;
-}
-
-.testimonial cite {
-  font-size: clamp(0.7rem, 0.62rem + 0.25vw, 0.85rem);
-  font-style: normal;
-  letter-spacing: 0.1em;
-  color: rgba(232,228,220,0.65);
-  text-transform: uppercase;
-}
-
-.testimonial cite span {
-  color: rgba(232,228,220,0.65);
-  display: block;
-  font-size: clamp(0.65rem, 0.58rem + 0.2vw, 0.78rem);
-  margin-top: 3px;
-}
-
-footer {
-  background: #1e2122;
-  padding: 3rem 2.5rem 0;
-  border-top: 1px solid rgba(255,255,255,0.06);
-}
-
-body.page-volunteer-donate footer {
-  background: #1e2122;
-  padding: 3rem 2.5rem 0;
-  border-top: 1px solid rgba(255,255,255,0.07);
-}
-
-.footer-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 2rem;
-  padding-bottom: 2.5rem;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-
-.footer-col-label {
-  margin-bottom: 0.75rem;
-}
-
-.footer-links {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-}
-
-body.page-volunteer-donate .footer-links {
-  gap: 0.5rem;
-}
-
-.footer-links a {
-  font-size: clamp(0.82rem, 0.75rem + 0.2vw, 0.95rem);
-  color: rgba(232,228,220,0.55);
-  text-decoration: none;
-}
-
-.footer-contact {
-  font-size: clamp(0.82rem, 0.75rem + 0.2vw, 0.95rem);
-  color: rgba(232,228,220,0.55);
-  line-height: 1.9;
-  margin-top: 0.75rem;
-}
-
-.footer-email {
-  color: #30b0b0;
-}
-
-.footer-cta {
-  padding: 3rem 0 2.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-
-.footer-hours {
-  font-size: clamp(0.82rem, 0.75rem + 0.2vw, 0.95rem);
-  color: rgba(232,228,220,0.55);
-  line-height: 1.7;
-}
-
-.footer-hours .closed {
-  color: rgba(232,228,220,0.55);
-  font-size: 0.78rem;
-}
-
-.footer-base {
-  padding: 1.5rem 0 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.footer-ll-link {
-  color: rgba(232,228,220,0.55);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(232,228,220,0.2);
-}
-
-.footer-legal {
-  font-size: clamp(0.75rem, 0.68rem + 0.2vw, 0.88rem);
-  color: rgba(232,228,220,0.55);
-  line-height: 1.6;
-}
-
-.social-icons {
-  display: flex;
-  gap: 1.25rem;
-  align-items: center;
-}
-
-.social-icon {
-  width: 18px;
-  height: 18px;
-  fill: rgba(232,228,220,0.45);
-  display: block;
-}
-
-.section-cream {
-  background: #f0ece3;
-  padding: 4rem 2.5rem;
-}
-
-.section-cream-inner {
-  max-width: 820px;
-  margin: 0 auto;
-}
-
-.section-cream-inner p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.78;
-  color: #3a3d3e;
-}
-
-body.page-volunteer-donate .section-cream-inner p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.75;
-  color: #3a3d3e;
-  margin-bottom: 2rem;
-  max-width: 640px;
-}
+/* -- Pillar stripes (how-it-works: numbered photo + text bands) -- */
 
 .pillar-stripe {
   width: 100%;
-  background: #f0ece3;
+  background: var(--cream);
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
 
-.section-cream-inner p + p {
-  margin-top: 1rem;
-}
-
 .pillar-stripe + .pillar-stripe {
   margin-top: 0;
-}
-
-body.page-classes-calendar .contact-inline {
-  color: #1a8a8a;
-  text-decoration: none;
-}
-
-body.page-enroll .contact-inline {
-  display: inline;
-  color: #1a8a8a;
-  text-decoration: none;
 }
 
 .pillar-photo {
@@ -689,25 +681,7 @@ body.page-enroll .contact-inline {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #2a2d2e;
-}
-
-.pillar-text h2 {
-  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
-  font-weight: 700;
-  line-height: 1.2;
-  margin: 0.75rem 0 1.25rem;
-  color: #2a2d2e;
-}
-
-.pillar-text p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.78;
-  color: #3a3d3e;
-}
-
-.pillar-text p + p {
-  margin-top: 1rem;
+  color: var(--charcoal);
 }
 
 .pillar-num {
@@ -715,19 +689,51 @@ body.page-enroll .contact-inline {
   font-weight: 700;
   line-height: 1;
   opacity: 0.12;
-  color: #2a2d2e;
+  color: var(--charcoal);
 }
 
-body.page-how-it-works .sample-day {
-  background: #2a2d2e;
+/* -- Testimonials (index) -- */
+
+.testimonials {
   padding: 4.5rem 2.5rem;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid var(--line-dark);
 }
 
-body.page-after-bslc .sample-day {
-  background: #1e2122;
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+}
+
+.testimonial blockquote {
+  margin-bottom: 1rem;
+  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.3rem);
+  line-height: 1.72;
+  color: var(--paper-body);
+  font-style: italic;
+  font-weight: 300;
+}
+
+.testimonial cite {
+  font-size: clamp(0.7rem, 0.62rem + 0.25vw, 0.85rem);
+  font-style: normal;
+  letter-spacing: 0.1em;
+  color: var(--paper-mid);
+  text-transform: uppercase;
+}
+
+.testimonial cite span {
+  display: block;
+  font-size: clamp(0.65rem, 0.58rem + 0.2vw, 0.78rem);
+  margin-top: 3px;
+}
+
+/* -- Sample day (how-it-works: schedule + photo carousel) -- */
+
+.sample-day {
+  background: var(--charcoal);
   padding: 4.5rem 2.5rem;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid var(--line-dark);
 }
 
 .sample-day-inner {
@@ -739,18 +745,10 @@ body.page-after-bslc .sample-day {
   align-items: start;
 }
 
-.sample-day-intro h2 {
-  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
-  font-weight: 700;
-  line-height: 1.2;
-  color: #e8e4dc;
-  margin: 0.75rem 0 1.25rem;
-}
-
 .sample-day-intro p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
+  font-size: var(--fs-body);
   line-height: 1.78;
-  color: rgba(232,228,220,0.65);
+  color: var(--paper-mid);
   margin-bottom: 1rem;
 }
 
@@ -775,7 +773,7 @@ body.page-after-bslc .sample-day {
   grid-template-columns: 4.5rem 1fr;
   gap: 0 1rem;
   padding: 0.85rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid var(--line-dark);
 }
 
 .schedule-item:last-child {
@@ -786,7 +784,7 @@ body.page-after-bslc .sample-day {
   font-size: clamp(0.7rem, 0.65rem + 0.2vw, 0.82rem);
   font-weight: 600;
   letter-spacing: 0.08em;
-  color: #30b0b0;
+  color: var(--teal);
   padding-top: 0.15rem;
   white-space: nowrap;
 }
@@ -794,69 +792,126 @@ body.page-after-bslc .sample-day {
 .schedule-desc {
   font-size: clamp(0.95rem, 0.88rem + 0.3vw, 1.15rem);
   line-height: 1.6;
-  color: rgba(232,228,220,0.75);
+  color: var(--paper-strong);
 }
 
 .schedule-desc strong {
-  color: rgba(232,228,220,0.95);
+  color: var(--paper-bright);
   font-weight: 500;
 }
 
-.section-dark-inner h2 {
-  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
-  font-weight: 700;
-  line-height: 1.2;
-  margin: 0.75rem 0 1.25rem;
-  color: #e8e4dc;
+
+/* =========================================================================
+   6. FOOTER
+   ========================================================================= */
+
+footer {
+  background: var(--charcoal-deep);
+  padding: 3rem 2.5rem 0;
+  border-top: 1px solid var(--line-dark);
 }
 
-.section-dark-inner p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.78;
-  color: rgba(232,228,220,0.7);
+/* Outranks the mobile footer rule, so the volunteer/donate footer keeps
+   desktop padding at phone widths (matches previous behavior — likely
+   safe to delete if you'd rather it match the other pages). */
+body.page-volunteer-donate footer {
+  padding: 3rem 2.5rem 0;
 }
 
-body.page-volunteer-donate .section-dark-inner p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.75;
-  color: rgba(232,228,220,0.7);
-  max-width: 640px;
-  margin-bottom: 2rem;
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 2rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--line-dark);
 }
 
-.section-dark-inner p + p {
-  margin-top: 1rem;
+.footer-col-label {
+  margin-bottom: 0.75rem;
 }
 
-.section-cream-inner h2 {
-  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
-  font-weight: 700;
-  line-height: 1.2;
-  margin: 0.75rem 0 1.25rem;
-  color: #2a2d2e;
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
 }
 
-body.page-enroll .section-cream-inner h2 {
-  margin: initial;
-  font-size: clamp(1.4rem, 1.1rem + 1vw, 1.9rem);
-  font-weight: 700;
-  line-height: 1.2;
-  color: #2a2d2e;
-  margin-bottom: 1rem;
+.footer-links a,
+.footer-contact,
+.footer-hours {
+  font-size: var(--fs-footer);
+  color: var(--paper-dim);
 }
 
-body.page-visit .section-cream-inner h2 {
-  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
-  font-weight: 700;
-  line-height: 1.2;
-  margin: 0.75rem 0 1.5rem;
-  color: #2a2d2e;
+.footer-links a {
+  text-decoration: none;
 }
 
+.footer-contact {
+  line-height: 1.9;
+  margin-top: 0.75rem;
+}
+
+.footer-email {
+  color: var(--teal);
+}
+
+.footer-cta {
+  padding: 3rem 0 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.footer-hours {
+  line-height: 1.7;
+}
+
+.footer-hours .closed {
+  font-size: 0.78rem;
+}
+
+.footer-base {
+  padding: 1.5rem 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-ll-link {
+  color: var(--paper-dim);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(232,228,220,0.2);
+}
+
+.footer-legal {
+  font-size: clamp(0.75rem, 0.68rem + 0.2vw, 0.88rem);
+  color: var(--paper-dim);
+  line-height: 1.6;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.social-icon {
+  width: 18px;
+  height: 18px;
+  fill: var(--paper-faint);
+  display: block;
+}
 
 
 /* =========================================================================
-   PAGE-SPECIFIC STYLES
+   7. PAGE-SPECIFIC STYLES
    ========================================================================= */
 
 
@@ -919,13 +974,8 @@ body.page-visit .section-cream-inner h2 {
   background: rgba(26,29,30,0.9);
 }
 
-.carousel-prev {
-  left: 0.65rem;
-}
-
-.carousel-next {
-  right: 0.65rem;
-}
+.carousel-prev { left: 0.65rem; }
+.carousel-next { right: 0.65rem; }
 
 .carousel-dots {
   display: flex;
@@ -946,43 +996,20 @@ body.page-visit .section-cream-inner h2 {
 }
 
 .carousel-dot.active {
-  background: #EF9F27;
+  background: var(--logo-orange);
 }
 
 
 /* ---------- CLASSES & CALENDAR (classes-calendar.html) ---------- */
 
-.btn-outline-large {
-  display: inline-block;
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.95rem, 0.85rem + 0.35vw, 1.15rem);
-  font-weight: 600;
-  letter-spacing: 0.07em;
-  color: #e8e4dc;
-  background: transparent;
-  border: 2px solid rgba(232,228,220,0.35);
-  padding: 0.8rem 2.4rem;
-  border-radius: 2px;
-  cursor: pointer;
-  text-decoration: none;
-}
-
 .calendars-section {
-  background: #f0ece3;
+  background: var(--cream);
   padding: 4rem 2.5rem;
 }
 
 .calendars-inner {
   max-width: 1080px;
   margin: 0 auto;
-}
-
-.calendars-inner h2 {
-  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
-  font-weight: 700;
-  line-height: 1.2;
-  margin: 0.75rem 0 1.25rem;
-  color: #2a2d2e;
 }
 
 .calendars-grid {
@@ -994,20 +1021,20 @@ body.page-visit .section-cream-inner h2 {
 
 .calendar-card {
   background: #ffffff;
-  border: 1px solid rgba(42,45,46,0.1);
+  border: 1px solid var(--line-cream);
   border-radius: 4px;
   overflow: hidden;
 }
 
 .calendar-card-header {
   padding: 1.5rem 1.75rem 1.25rem;
-  border-bottom: 1px solid rgba(42,45,46,0.08);
+  border-bottom: 1px solid var(--line-cream-soft);
 }
 
 .calendar-card-header h3 {
-  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
+  font-size: var(--fs-h3);
   font-weight: 700;
-  color: #2a2d2e;
+  color: var(--charcoal);
   margin-bottom: 0.35rem;
 }
 
@@ -1027,36 +1054,15 @@ body.page-visit .section-cream-inner h2 {
 .calendar-card-footer {
   padding: 1rem 1.75rem;
   background: rgba(42,45,46,0.02);
-  border-top: 1px solid rgba(42,45,46,0.08);
+  border-top: 1px solid var(--line-cream-soft);
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
-.cal-open-link {
-  font-size: clamp(0.75rem, 0.68rem + 0.2vw, 0.88rem);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #1a8a8a;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(26,138,138,0.4);
-  padding-bottom: 2px;
-}
-
 .section-dark-intro {
   max-width: 660px;
   margin-bottom: 3rem;
-}
-
-.section-dark-intro p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.78;
-  color: rgba(232,228,220,0.7);
-}
-
-.section-dark-intro p + p {
-  margin-top: 1rem;
 }
 
 .class-categories {
@@ -1081,29 +1087,14 @@ body.page-visit .section-cream-inner h2 {
   margin-bottom: 1rem;
 }
 
-.cat-color-teal {
-  color: #3ABCB0;
-}
-
-.cat-color-pink {
-  color: #D4537E;
-}
-
-.cat-color-orange {
-  color: #EF9F27;
-}
-
-.cat-color-coral {
-  color: #E8724A;
-}
-
-.cat-color-lavender {
-  color: #a78fd4;
-}
-
-.cat-color-sage {
-  color: #7ab89a;
-}
+/* Category label colors. cat-color-orange is unused right now but kept
+   so all six category colors stay available. */
+.cat-color-teal     { color: var(--logo-teal); }
+.cat-color-pink     { color: var(--logo-pink); }
+.cat-color-orange   { color: var(--logo-orange); }
+.cat-color-coral    { color: var(--logo-coral); }
+.cat-color-lavender { color: #a78fd4; }
+.cat-color-sage     { color: #7ab89a; }
 
 .class-list {
   list-style: none;
@@ -1121,45 +1112,28 @@ body.page-visit .section-cream-inner h2 {
 .class-name {
   font-size: clamp(0.95rem, 0.88rem + 0.25vw, 1.1rem);
   font-weight: 600;
-  color: #e8e4dc;
+  color: var(--paper);
   line-height: 1.25;
 }
 
 .class-instructor {
   font-size: clamp(0.75rem, 0.68rem + 0.18vw, 0.88rem);
   font-weight: 400;
-  color: rgba(232,228,220,0.65);
+  color: var(--paper-mid);
   letter-spacing: 0.02em;
 }
 
 .class-desc {
   font-size: clamp(0.82rem, 0.76rem + 0.2vw, 0.95rem);
-  color: rgba(232,228,220,0.65);
+  color: var(--paper-mid);
   line-height: 1.5;
 }
 
 .class-divider {
   width: 100%;
   height: 1px;
-  background: rgba(255,255,255,0.06);
+  background: var(--line-dark);
   margin: 0.55rem 0;
-}
-
-.classes-note {
-  margin-top: 2.5rem;
-  padding: 1.5rem 1.75rem;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-left: 3px solid #30b0b0;
-  border-radius: 0 3px 3px 0;
-  font-size: clamp(0.95rem, 0.88rem + 0.25vw, 1.1rem);
-  line-height: 1.72;
-  color: rgba(232,228,220,0.6);
-}
-
-.classes-note strong {
-  color: rgba(232,228,220,0.85);
-  font-weight: 600;
 }
 
 
@@ -1180,39 +1154,16 @@ body.page-visit .section-cream-inner h2 {
 }
 
 .path-card h3 {
-  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
+  font-size: var(--fs-h3);
   font-weight: 700;
   margin-bottom: 0.75rem;
-  color: #e8e4dc;
-  letter-spacing: normal;
-  text-transform: none;
+  color: var(--paper);
 }
 
 .path-card p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  color: rgba(232,228,220,0.7);
+  font-size: var(--fs-body);
+  color: var(--paper-body);
   line-height: 1.7;
-}
-
-a.link {
-  color: #30b0b0;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.college-photo-strip {
-  width: 100%;
-  overflow: hidden;
-  max-height: 100vh;
-  background: #2a2d2e;
-}
-
-.college-photo-strip img {
-  width: 100%;
-  display: block;
-  object-fit: cover;
-  object-position: center 30%;
-  max-height: 100vh;
 }
 
 .college-grid {
@@ -1226,7 +1177,7 @@ a.link {
   padding-left: 1em;
   position: relative;
   font-size: clamp(0.88rem, 0.8rem + 0.25vw, 1.05rem);
-  color: #3a3d3e;
+  color: var(--ink-body);
   line-height: 1.4;
   margin: 0 0 0.3rem;
   break-inside: avoid;
@@ -1236,38 +1187,20 @@ a.link {
   content: '→';
   position: absolute;
   left: 0;
-  color: #D4537E;
+  color: var(--logo-pink);
   font-size: 0.85em;
 }
 
 .college-note {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  color: #3a3d3e;
-  line-height: 1.7;
-}
-
-.placeholder-box {
-  background: rgba(255,255,255,0.05);
-  border: 1px dashed rgba(255,255,255,0.2);
-  border-radius: 4px;
-  padding: 1.5rem;
-  color: rgba(232,228,220,0.45);
-  font-style: italic;
-  font-size: clamp(0.9rem, 0.82rem + 0.3vw, 1.1rem);
-}
-
-.placeholder-box-cream {
-  background: rgba(42,45,46,0.06);
-  border: 1px dashed rgba(42,45,46,0.2);
-  border-radius: 4px;
-  padding: 1.5rem;
-  color: rgba(42,45,46,0.4);
-  font-style: italic;
-  font-size: clamp(0.9rem, 0.82rem + 0.3vw, 1.1rem);
+  line-height: 1.7;   /* slightly tighter than standard body text */
 }
 
 
 /* ---------- ABOUT US (about-us.html) ---------- */
+
+/* Staff stripes come in .cream and .dark variants so they can alternate.
+   All current stripes are cream; the .dark rules are kept so the option
+   still works. */
 
 .staff-stripe {
   width: 100%;
@@ -1277,13 +1210,13 @@ a.link {
 }
 
 .staff-stripe.dark {
-  background: #2a2d2e;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  background: var(--charcoal);
+  border-top: 1px solid var(--line-dark);
+  border-bottom: 1px solid var(--line-dark);
 }
 
 .staff-stripe.cream {
-  background: #f0ece3;
+  background: var(--cream);
 }
 
 .staff-photo {
@@ -1320,12 +1253,12 @@ a.link {
   font-size: clamp(3rem, 2rem + 4vw, 6rem);
   font-weight: 700;
   opacity: 0.12;
-  color: #e8e4dc;
+  color: var(--paper);
   letter-spacing: -0.02em;
 }
 
 .staff-stripe.cream .placeholder-initial {
-  color: #2a2d2e;
+  color: var(--charcoal);
 }
 
 .staff-text {
@@ -1333,64 +1266,6 @@ a.link {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-}
-
-.staff-stripe.dark .staff-text {
-  color: #e8e4dc;
-}
-
-.staff-stripe.dark .staff-text blockquote {
-  color: rgba(232,228,220,0.6);
-}
-
-.staff-stripe.dark .staff-text p {
-  color: rgba(232,228,220,0.75);
-}
-
-.staff-stripe.dark .staff-text h2 {
-  color: #e8e4dc;
-}
-
-.staff-stripe.dark .staff-text .staff-role {
-  color: rgba(232,228,220,0.65);
-}
-
-.staff-stripe.dark .staff-text .staff-contact a {
-  color: #30b0b0;
-}
-
-.staff-stripe.dark .staff-text .staff-link a {
-  color: rgba(232,228,220,0.65);
-  border-bottom-color: rgba(232,228,220,0.2);
-}
-
-.staff-stripe.cream .staff-text {
-  color: #2a2d2e;
-}
-
-.staff-stripe.cream .staff-text blockquote {
-  color: rgba(42,45,46,0.6);
-}
-
-.staff-stripe.cream .staff-text p {
-  color: #3a3d3e;
-}
-
-.staff-stripe.cream .staff-text h2 {
-  color: #2a2d2e;
-}
-
-.staff-stripe.cream .staff-text .staff-role {
-  color: rgba(42,45,46,0.7);
-}
-
-.staff-stripe.cream .staff-text .staff-contact a {
-  color: #1a8a8a;
-}
-
-.staff-stripe.cream .staff-text .staff-link a {
-  color: rgba(42,45,46,0.7);
-  border-bottom-color: rgba(42,45,46,0.2);
 }
 
 .staff-text h2 {
@@ -1409,7 +1284,7 @@ a.link {
 }
 
 .staff-text blockquote {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
+  font-size: var(--fs-body);
   line-height: 1.72;
   font-style: italic;
   font-weight: 300;
@@ -1423,13 +1298,36 @@ a.link {
 }
 
 .staff-text p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
+  font-size: var(--fs-body);
   line-height: 1.78;
   margin-bottom: 1rem;
 }
 
 .staff-text p:last-of-type {
   margin-bottom: 0;
+}
+
+/* Text colors per stripe variant */
+.staff-stripe.dark .staff-text { color: var(--paper); }
+.staff-stripe.dark .staff-text h2 { color: var(--paper); }
+.staff-stripe.dark .staff-text blockquote { color: var(--paper-soft); }
+.staff-stripe.dark .staff-text p { color: var(--paper-strong); }
+.staff-stripe.dark .staff-text .staff-role { color: var(--paper-mid); }
+.staff-stripe.dark .staff-text .staff-contact a { color: var(--teal); }
+.staff-stripe.dark .staff-text .staff-link a {
+  color: var(--paper-mid);
+  border-bottom-color: rgba(232,228,220,0.2);
+}
+
+.staff-stripe.cream .staff-text { color: var(--charcoal); }
+.staff-stripe.cream .staff-text h2 { color: var(--charcoal); }
+.staff-stripe.cream .staff-text blockquote { color: rgba(42,45,46,0.6); }
+.staff-stripe.cream .staff-text p { color: var(--ink-body); }
+.staff-stripe.cream .staff-text .staff-role { color: var(--ink-mid); }
+.staff-stripe.cream .staff-text .staff-contact a { color: var(--teal-dark); }
+.staff-stripe.cream .staff-text .staff-link a {
+  color: var(--ink-mid);
+  border-bottom-color: rgba(42,45,46,0.2);
 }
 
 .staff-contact {
@@ -1461,7 +1359,7 @@ a.link {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   background: rgba(48,176,176,0.15);
-  color: #30b0b0;
+  color: var(--teal);
   border: 1px solid rgba(48,176,176,0.3);
   border-radius: 2px;
   padding: 0.2rem 0.55rem;
@@ -1471,25 +1369,28 @@ a.link {
 
 .staff-stripe.cream .forthcoming-badge {
   background: rgba(26,138,138,0.1);
-  color: #1a8a8a;
+  color: var(--teal-dark);
   border-color: rgba(26,138,138,0.25);
 }
 
-.staff-divider-wrap {
-  background: #f0ece3;
+/* Thick dividers between stripes; same style is used on the blog list. */
+.staff-divider-wrap,
+.blog-divider-wrap {
+  background: var(--cream);
   padding: 0;
 }
 
-.staff-divider {
+.staff-divider,
+.blog-divider {
   border: none;
   border-top: 3px solid rgba(42,45,46,0.2);
   margin: 0 2.5rem;
 }
 
 .board-section {
-  background: #f0ece3;
+  background: var(--cream);
   padding: 4.5rem 2.5rem;
-  border-top: 1px solid rgba(42,45,46,0.08);
+  border-top: 1px solid var(--line-cream-soft);
 }
 
 .board-section-inner {
@@ -1500,13 +1401,6 @@ a.link {
 .board-section-header {
   margin-bottom: 3rem;
   text-align: center;
-}
-
-.board-section-header h2 {
-  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
-  font-weight: 700;
-  color: #2a2d2e;
-  margin-top: 0.5rem;
 }
 
 .board-grid {
@@ -1539,9 +1433,9 @@ a.link {
 }
 
 .board-info h3 {
-  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.2rem);
+  font-size: var(--fs-h3);
   font-weight: 600;
-  color: #2a2d2e;
+  color: var(--charcoal);
   margin-bottom: 0.6rem;
   line-height: 1.25;
 }
@@ -1549,13 +1443,13 @@ a.link {
 .board-info p {
   font-size: clamp(0.88rem, 0.8rem + 0.3vw, 1rem);
   line-height: 1.72;
-  color: rgba(42,45,46,0.72);
+  color: var(--ink-mid);
 }
 
 .ll-section {
-  background: #2a2d2e;
+  background: var(--charcoal);
   padding: 4rem 2.5rem;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid var(--line-dark);
 }
 
 .ll-section-inner {
@@ -1567,18 +1461,10 @@ a.link {
   align-items: center;
 }
 
-.ll-section-inner h2 {
-  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
-  font-weight: 700;
-  line-height: 1.2;
-  color: #e8e4dc;
-  margin-bottom: 1.25rem;
-}
-
 .ll-text p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
+  font-size: var(--fs-body);
   line-height: 1.78;
-  color: rgba(232,228,220,0.72);
+  color: var(--paper-body);
   margin-bottom: 1rem;
 }
 
@@ -1587,7 +1473,7 @@ a.link {
 }
 
 .ll-link {
-  color: #30b0b0;
+  color: var(--teal);
   text-decoration: none;
   border-bottom: 1px solid rgba(48,176,176,0.4);
 }
@@ -1608,46 +1494,8 @@ a.link {
 
 /* ---------- ENROLL (enroll.html) ---------- */
 
-.btn-outline {
-  display: inline-block;
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.95rem, 0.85rem + 0.35vw, 1.15rem);
-  font-weight: 600;
-  letter-spacing: 0.07em;
-  color: #e8e4dc;
-  background: transparent;
-  border: 2px solid rgba(232,228,220,0.35);
-  padding: 0.8rem 2.4rem;
-  border-radius: 2px;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.btn-orange-large {
-  display: inline-block;
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.95rem, 0.85rem + 0.35vw, 1.15rem);
-  font-weight: 600;
-  letter-spacing: 0.07em;
-  color: #1a1a1a;
-  background-color: #E8724A;
-  border: 2px solid #E8724A;
-  padding: 0.8rem 2.4rem;
-  border-radius: 2px;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.hero-cta {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 2.25rem;
-}
-
 .steps-section {
-  background: #f0ece3;
+  background: var(--cream);
   padding: 4.5rem 2.5rem;
 }
 
@@ -1660,18 +1508,14 @@ a.link {
   margin-bottom: 3rem;
 }
 
-.steps-intro h2 {
-  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
-  font-weight: 700;
-  line-height: 1.2;
-  color: #2a2d2e;
-  margin-bottom: 1rem;
+.steps-intro p,
+.step-body p {
+  font-size: var(--fs-body);
+  line-height: 1.78;
+  color: var(--ink-lead);
 }
 
 .steps-intro p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.75;
-  color: #4a4d4e;
   max-width: 640px;
 }
 
@@ -1687,7 +1531,7 @@ a.link {
   gap: 1.5rem;
   align-items: start;
   padding: 2rem 0;
-  border-bottom: 1px solid rgba(42,45,46,0.1);
+  border-bottom: 1px solid var(--line-cream);
 }
 
 .step:last-child {
@@ -1706,52 +1550,9 @@ a.link {
 .step-body h3 {
   font-size: clamp(1.1rem, 1rem + 0.5vw, 1.4rem);
   font-weight: 700;
-  color: #2a2d2e;
+  color: var(--charcoal);
   margin-bottom: 0.5rem;
   line-height: 1.25;
-}
-
-.step-body p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.75;
-  color: #4a4d4e;
-}
-
-.step-body .step-link {
-  display: inline-block;
-  margin-top: 0.85rem;
-  font-size: clamp(0.75rem, 0.65rem + 0.25vw, 0.88rem);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #1a8a8a;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(26,138,138,0.4);
-  padding-bottom: 2px;
-}
-
-.step-body .step-link-orange {
-  display: inline-block;
-  margin-top: 0.85rem;
-  font-size: clamp(0.75rem, 0.65rem + 0.25vw, 0.88rem);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #c06020;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(192,96,32,0.4);
-  padding-bottom: 2px;
-}
-
-.section-dark-inner > p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.78;
-  color: rgba(232,228,220,0.7);
-  margin-bottom: 1.5rem;
-}
-
-.section-dark-inner > p:last-of-type {
-  margin-bottom: 0;
 }
 
 .fee-display {
@@ -1774,7 +1575,7 @@ a.link {
   font-weight: 500;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: rgba(232,228,220,0.65);
+  color: var(--paper-mid);
   margin-bottom: 0.6rem;
 }
 
@@ -1782,16 +1583,42 @@ a.link {
   font-size: clamp(1.8rem, 1.4rem + 1.5vw, 2.6rem);
   font-weight: 700;
   line-height: 1;
-  color: #30b0b0;
+  color: var(--teal);
 }
 
 .fee-amount .fee-unit {
   font-size: clamp(0.85rem, 0.78rem + 0.25vw, 1rem);
   font-weight: 400;
-  color: rgba(232,228,220,0.65);
+  color: var(--paper-mid);
   display: block;
   margin-top: 0.4rem;
   letter-spacing: 0.03em;
+}
+
+.aid-band {
+  background: rgba(232,114,74,0.1);
+  border: 1px solid rgba(232,114,74,0.3);
+  border-radius: 3px;
+  padding: 2rem 2rem;
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.aid-band-text h3 {
+  font-size: var(--fs-body);
+  font-weight: 700;
+  color: var(--paper);
+  margin-bottom: 0.5rem;
+}
+
+.aid-band-text p,
+.payment-block p {
+  font-size: var(--fs-body);
+  line-height: 1.78;
+  color: var(--paper-mid);
 }
 
 .payment-details {
@@ -1808,55 +1635,13 @@ a.link {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(232,228,220,0.65);
+  color: var(--paper-mid);
   margin-bottom: 0.6rem;
 }
 
-.payment-block p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.75;
-  color: rgba(232,228,220,0.65);
-}
-
 .payment-block a {
-  color: #30b0b0;
+  color: var(--teal);
   text-decoration: none;
-}
-
-.aid-band {
-  background: rgba(232,114,74,0.1);
-  border: 1px solid rgba(232,114,74,0.3);
-  border-radius: 3px;
-  padding: 2rem 2rem;
-  margin-top: 2.5rem;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-.aid-band-text h3 {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  font-weight: 700;
-  color: #e8e4dc;
-  margin-bottom: 0.5rem;
-}
-
-.aid-band-text p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.75;
-  color: rgba(232,228,220,0.65);
-}
-
-.section-cream-inner > p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.78;
-  color: #4a4d4e;
-  margin-bottom: 1.25rem;
-}
-
-.section-cream-inner > p:last-of-type {
-  margin-bottom: 0;
 }
 
 
@@ -1873,7 +1658,7 @@ a.link {
   grid-template-columns: 2.5rem 1fr;
   gap: 0 1.5rem;
   padding: 1.5rem 0;
-  border-bottom: 1px solid rgba(42,45,46,0.1);
+  border-bottom: 1px solid var(--line-cream);
 }
 
 .visit-step:last-child {
@@ -1883,29 +1668,23 @@ a.link {
 .visit-step-num {
   font-size: clamp(1.1rem, 1rem + 0.4vw, 1.4rem);
   font-weight: 700;
-  color: #30b0b0;
+  color: var(--teal);
   padding-top: 0.1rem;
   line-height: 1.3;
 }
 
 .visit-step-body h3 {
-  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.2rem);
+  font-size: var(--fs-h3);
   font-weight: 700;
-  color: #2a2d2e;
+  color: var(--charcoal);
   margin-bottom: 0.5rem;
   line-height: 1.3;
 }
 
-.visit-step-body p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.75;
-  color: #3a3d3e;
-}
-
 .form-section {
-  background: #f0ece3;
+  background: var(--cream);
   padding: 4rem 2.5rem 4.5rem;
-  border-top: 1px solid rgba(42,45,46,0.08);
+  border-top: 1px solid var(--line-cream-soft);
 }
 
 .form-section-inner {
@@ -1913,24 +1692,16 @@ a.link {
   margin: 0 auto;
 }
 
-.form-section-inner h2 {
-  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
-  font-weight: 700;
-  line-height: 1.2;
-  margin: 0.75rem 0 0.5rem;
-  color: #2a2d2e;
-}
-
 .form-section-inner .form-intro {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
+  font-size: var(--fs-body);
   line-height: 1.7;
-  color: #3a3d3e;
+  color: var(--ink-body);
   margin-bottom: 0.75rem;
 }
 
 .form-hours {
   font-size: clamp(0.88rem, 0.8rem + 0.3vw, 1.05rem);
-  color: rgba(42,45,46,0.7);
+  color: var(--ink-mid);
   margin-bottom: 2rem;
 }
 
@@ -1946,18 +1717,7 @@ a.link {
   align-items: center;
 }
 
-.donate-text h2 {
-  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
-  font-weight: 700;
-  line-height: 1.2;
-  margin: 0.75rem 0 1.25rem;
-  color: #2a2d2e;
-}
-
 .donate-text p {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.75;
-  color: #3a3d3e;
   margin-bottom: 2rem;
   max-width: 520px;
 }
@@ -1976,22 +1736,6 @@ a.link {
   display: block;
 }
 
-.donate-photo-placeholder {
-  width: 100%;
-  aspect-ratio: 2 / 3;
-  background: #ddd8ce;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(42,45,46,0.3);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-align: center;
-  padding: 1rem;
-}
-
 .vol-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2005,8 +1749,6 @@ a.link {
 
 .vol-form fieldset {
   border: none;
-  margin: 0;
-  padding: 0;
   min-width: 0;
 }
 
@@ -2017,18 +1759,18 @@ a.link {
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(232,228,220,0.65);
+  color: var(--paper-mid);
   margin-bottom: 0.4rem;
 }
 
 .vol-form input,
-  .vol-form textarea,
-  .vol-form select {
-  font-family: 'Outfit', sans-serif;
+.vol-form textarea,
+.vol-form select {
+  font-family: inherit;
   font-size: clamp(0.9rem, 0.82rem + 0.3vw, 1.05rem);
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.1);
-  color: #e8e4dc;
+  color: var(--paper);
   padding: 0.65rem 0.9rem;
   border-radius: 2px;
   width: 100%;
@@ -2037,13 +1779,13 @@ a.link {
 }
 
 .vol-form input:focus,
-  .vol-form textarea:focus,
-  .vol-form select:focus {
+.vol-form textarea:focus,
+.vol-form select:focus {
   border-color: rgba(48,176,176,0.5);
 }
 
 .vol-form select option {
-  background: #2a2d2e;
+  background: var(--charcoal);
 }
 
 .vol-form textarea {
@@ -2063,14 +1805,15 @@ a.link {
   align-items: center;
   gap: 0.5rem;
   font-size: clamp(0.88rem, 0.8rem + 0.3vw, 1rem);
-  color: rgba(232,228,220,0.75);
+  color: var(--paper-strong);
   cursor: pointer;
 }
 
+/* Undo the shared input styling for checkboxes */
 .vol-form-check input[type="checkbox"] {
   width: 1rem;
   height: 1rem;
-  accent-color: #30b0b0;
+  accent-color: var(--teal);
   cursor: pointer;
   flex-shrink: 0;
   padding: 0;
@@ -2087,22 +1830,12 @@ a.link {
 
 .vol-submit {
   margin-top: 0.5rem;
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.95rem, 0.85rem + 0.35vw, 1.15rem);
-  font-weight: 600;
-  letter-spacing: 0.07em;
-  color: #1a1a1a;
-  background-color: #30b0b0;
-  border: 2px solid #30b0b0;
-  padding: 0.8rem 2.4rem;
-  border-radius: 2px;
-  cursor: pointer;
 }
 
 .section-cream-alt {
-  background: #f0ece3;
+  background: var(--cream);
   padding: 4rem 2.5rem;
-  border-top: 1px solid rgba(42,45,46,0.08);
+  border-top: 1px solid var(--line-cream-soft);
 }
 
 
@@ -2113,19 +1846,8 @@ a.link {
   margin: 0 auto;
 }
 
-.blog-divider-wrap {
-  background: #f0ece3;
-  padding: 0;
-}
-
-.blog-divider {
-  border: none;
-  border-top: 3px solid rgba(42,45,46,0.2);
-  margin: 0 2.5rem;
-}
-
 .blog-entry {
-  background: #f0ece3;
+  background: var(--cream);
   display: grid;
   grid-template-columns: 1fr 280px;
   gap: 3rem;
@@ -2134,10 +1856,9 @@ a.link {
   max-width: 100%;
 }
 
-.blog-entry-text {
-}
-
-.blog-meta {
+/* Bylines and dates: shared between the blog list and post pages */
+.blog-meta,
+.post-meta {
   display: flex;
   align-items: center;
   gap: 1.25rem;
@@ -2145,20 +1866,22 @@ a.link {
   flex-wrap: wrap;
 }
 
-.blog-author {
-  font-size: clamp(0.72rem, 0.65rem + 0.25vw, 0.85rem);
+.blog-author,
+.post-author {
+  font-size: var(--fs-meta);
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #1a8a8a;
+  color: var(--teal-dark);
 }
 
-.blog-date {
-  font-size: clamp(0.72rem, 0.65rem + 0.25vw, 0.85rem);
+.blog-date,
+.post-date {
+  font-size: var(--fs-meta);
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(42,45,46,0.7);
+  color: var(--ink-mid);
 }
 
 .blog-entry-title {
@@ -2167,7 +1890,7 @@ a.link {
   line-height: 1.2;
   letter-spacing: -0.01em;
   margin-bottom: 0.9rem;
-  color: #2a2d2e;
+  color: var(--charcoal);
 }
 
 .blog-entry-title a {
@@ -2176,24 +1899,24 @@ a.link {
 }
 
 .blog-entry-title a:hover {
-  color: #1a8a8a;
+  color: var(--teal-dark);
   transition: color 0.15s;
 }
 
 .blog-teaser {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
-  line-height: 1.75;
-  color: rgba(42,45,46,0.72);
+  font-size: var(--fs-body);
+  line-height: 1.78;
+  color: var(--ink-mid);
   margin-bottom: 1.25rem;
 }
 
 .blog-read-more {
   display: inline-block;
-  font-size: clamp(0.72rem, 0.65rem + 0.25vw, 0.85rem);
+  font-size: var(--fs-meta);
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #c06020;
+  color: var(--orange-dark);
   text-decoration: none;
   border-bottom: 1px solid rgba(192,96,32,0.35);
   padding-bottom: 2px;
@@ -2201,7 +1924,7 @@ a.link {
 }
 
 .blog-read-more:hover {
-  color: #1a8a8a;
+  color: var(--teal-dark);
   border-color: rgba(26,138,138,0.4);
 }
 
@@ -2220,6 +1943,7 @@ a.link {
   display: block;
 }
 
+/* Used by the blog pipeline when a post has no photo */
 .blog-entry-photo.placeholder {
   display: flex;
   align-items: center;
@@ -2246,11 +1970,11 @@ a.link {
 
 .post-back {
   display: inline-block;
-  font-size: clamp(0.72rem, 0.65rem + 0.25vw, 0.85rem);
+  font-size: var(--fs-meta);
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(42,45,46,0.7);
+  color: var(--ink-mid);
   text-decoration: none;
   border-bottom: 1px solid rgba(42,45,46,0.2);
   padding-bottom: 2px;
@@ -2259,32 +1983,8 @@ a.link {
 }
 
 .post-back:hover {
-  color: #1a8a8a;
+  color: var(--teal-dark);
   border-color: rgba(26,138,138,0.4);
-}
-
-.post-meta {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  margin-bottom: 0.9rem;
-  flex-wrap: wrap;
-}
-
-.post-author {
-  font-size: clamp(0.72rem, 0.65rem + 0.25vw, 0.85rem);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #1a8a8a;
-}
-
-.post-date {
-  font-size: clamp(0.72rem, 0.65rem + 0.25vw, 0.85rem);
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(42,45,46,0.7);
 }
 
 .post-title {
@@ -2293,9 +1993,10 @@ a.link {
   line-height: 1.15;
   letter-spacing: -0.01em;
   margin-bottom: 2rem;
-  color: #2a2d2e;
+  color: var(--charcoal);
 }
 
+/* Hero image inserted by the blog pipeline ({{HERO_IMAGE_BLOCK}}) */
 .post-hero {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -2307,7 +2008,7 @@ a.link {
 }
 
 .post-body {
-  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
+  font-size: var(--fs-body);
   line-height: 1.82;
   color: rgba(42,45,46,0.82);
 }
@@ -2326,23 +2027,23 @@ a.link {
 
 .post-body strong {
   font-weight: 600;
-  color: #2a2d2e;
+  color: var(--charcoal);
 }
 
 .post-body a {
-  color: #1a8a8a;
+  color: var(--teal-dark);
   text-decoration: none;
   border-bottom: 1px solid rgba(26,138,138,0.35);
 }
 
 .post-body a:hover {
-  border-color: #1a8a8a;
+  border-color: var(--teal-dark);
 }
 
 .post-body h2 {
   font-size: clamp(1.2rem, 1rem + 0.8vw, 1.55rem);
   font-weight: 700;
-  color: #2a2d2e;
+  color: var(--charcoal);
   margin: 2.5rem 0 1rem;
   line-height: 1.2;
 }
@@ -2355,7 +2056,8 @@ a.link {
   line-height: 1.25;
 }
 
-.post-body ul, .post-body ol {
+.post-body ul,
+.post-body ol {
   padding-left: 1.5rem;
   margin-bottom: 1.5rem;
 }
@@ -2376,7 +2078,7 @@ a.link {
 
 .post-body figcaption {
   font-size: clamp(0.75rem, 0.68rem + 0.2vw, 0.88rem);
-  color: rgba(42,45,46,0.7);
+  color: var(--ink-mid);
   letter-spacing: 0.03em;
   margin-top: 0.6rem;
   line-height: 1.5;
@@ -2384,70 +2086,56 @@ a.link {
 
 
 /* =========================================================================
-   RESPONSIVE / MOBILE
+   8. RESPONSIVE / MOBILE
    ========================================================================= */
-
 
 @media (max-width: 640px) {
 
+  /* Nav and footer mobile rules live in the 700px block at the bottom
+     of this file — they collapse at 700px on every page. */
 
-  /* -- shared nav/footer/layout mobile rules -- */
+  /* -- shared hero / sections -- */
 
-  nav {
-    padding: 1rem 1.25rem;
-    gap: 0;
-  }
-
-  .nav-links {
-    display: none;
-  }
-
-  .hamburger {
-    display: flex;
-  }
-
-  .nav-right {
-    gap: 1rem;
-  }
-
-  .hero {
+  .hero,
+  .page-hero {
     padding: 2.5rem 1.25rem 2rem;
   }
+
+  .section-dark,
+  .section-cream {
+    padding: 3rem 1.25rem;
+  }
+
+  /* -- stripes stack; text always comes before the photo -- */
 
   .split-stripe {
     grid-template-columns: 1fr;
     margin-top: 2rem;
   }
 
+  .split-stripe .split-text { order: 1; }
+  .split-stripe .split-photo { order: 2; }
+
   .split-photo img {
     min-height: 260px;
   }
 
-  .split-stripe.text-left .split-text {
-    order: 1;
-  }
-
-  .section-dark {
-    padding: 3rem 1.25rem;
-  }
-
-  .split-stripe.text-left .split-photo {
-    order: 2;
-  }
-
-  .split-stripe.text-right .split-text {
-    order: 1;
-  }
-
-  .section-cream {
-    padding: 3rem 1.25rem;
-  }
-
-  .split-stripe.text-right .split-photo {
-    order: 2;
-  }
-
   .split-text {
+    padding: 2rem 1.25rem;
+  }
+
+  .pillar-stripe {
+    grid-template-columns: 1fr;
+  }
+
+  .pillar-stripe .pillar-text { order: 1; }
+  .pillar-stripe .pillar-photo { order: 2; }
+
+  .pillar-photo img {
+    min-height: 260px;
+  }
+
+  .pillar-text {
     padding: 2rem 1.25rem;
   }
 
@@ -2460,78 +2148,26 @@ a.link {
     gap: 2rem;
   }
 
-  footer {
-    padding: 2.5rem 1.25rem 0;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-
-  .footer-base {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .page-hero {
-    padding: 2.5rem 1.25rem 2rem;
-  }
-
-  .pillar-stripe {
-    grid-template-columns: 1fr;
-  }
-
-  .pillar-photo img {
-    min-height: 260px;
-  }
-
-  .pillar-stripe .pillar-text {
-    order: 1;
-  }
-
-  .pillar-stripe .pillar-photo {
-    order: 2;
-  }
-
-  .pillar-text {
-    padding: 2rem 1.25rem;
-  }
-
-  .sample-day {
-    padding: 3rem 1.25rem;
-  }
+  /* .sample-day keeps its desktop padding on mobile: the previous
+     stylesheet's mobile padding rule was outranked and never applied. */
 
   .sample-day-inner {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
 
-
-  /* -- CLASSES & CALENDAR (classes-calendar.html) mobile -- */
+  /* -- CLASSES & CALENDAR -- */
 
   .calendars-section {
     padding: 3rem 1.25rem;
   }
 
-  .calendars-grid {
-    grid-template-columns: 1fr;
-  }
-
+  .calendars-grid,
   .class-categories {
     grid-template-columns: 1fr;
   }
 
-
-  /* -- AFTER BSLC (after-bslc.html) mobile -- */
-
-  .college-photo-strip {
-    max-height: 60vh;
-  }
-
-  .college-photo-strip img {
-    max-height: 60vh;
-  }
+  /* -- AFTER BSLC -- */
 
   .path-cards {
     grid-template-columns: 1fr;
@@ -2541,8 +2177,7 @@ a.link {
     columns: 1;
   }
 
-
-  /* -- ABOUT US (about-us.html) mobile -- */
+  /* -- ABOUT US -- */
 
   .staff-stripe {
     grid-template-columns: 1fr;
@@ -2553,6 +2188,9 @@ a.link {
   .page-hero + .staff-stripe {
     padding-top: 2.5rem;
   }
+
+  .staff-stripe .staff-photo { order: 1; }
+  .staff-stripe .staff-text { order: 2; }
 
   .staff-photo {
     min-height: 300px;
@@ -2566,14 +2204,6 @@ a.link {
 
   .staff-photo-placeholder {
     min-height: 220px;
-  }
-
-  .staff-stripe .staff-photo {
-    order: 1;
-  }
-
-  .staff-stripe .staff-text {
-    order: 2;
   }
 
   .staff-text {
@@ -2602,8 +2232,7 @@ a.link {
     justify-content: flex-start;
   }
 
-
-  /* -- ENROLL (enroll.html) mobile -- */
+  /* -- ENROLL -- */
 
   .steps-section {
     padding: 3rem 1.25rem;
@@ -2645,15 +2274,13 @@ a.link {
     align-items: center;
   }
 
-
-  /* -- VISIT (visit.html) mobile -- */
+  /* -- VISIT -- */
 
   .form-section {
     padding: 3rem 1.25rem 3.5rem;
   }
 
-
-  /* -- VOLUNTEER & DONATE (volunteer-donate.html) mobile -- */
+  /* -- VOLUNTEER & DONATE -- */
 
   .section-cream-alt {
     padding: 3rem 1.25rem;
@@ -2680,24 +2307,25 @@ a.link {
     width: clamp(120px, 40vw, 200px);
   }
 
-
 }
 
 
+/* Between 641 and 960px the class categories drop from 3 columns to 2. */
 @media (min-width: 641px) and (max-width: 960px) {
 
   .class-categories {
     grid-template-columns: 1fr 1fr;
   }
 
-
 }
 
 
+/* The nav and footer collapse at 700px on ALL pages (the blog's
+   two-column entry layout also stacks here, so blog pages change all at
+   once). Exceptions: the visit/blog nav and volunteer-donate footer
+   rules near the top of the file outrank these and keep their desktop
+   padding — see the notes on those rules. */
 @media (max-width: 700px) {
-
-
-  /* -- blog listing page mobile -- */
 
   nav {
     padding: 1rem 1.25rem;
@@ -2716,47 +2344,6 @@ a.link {
     gap: 1rem;
   }
 
-  .blog-divider {
-    margin: 0 1.25rem;
-  }
-
-  .staff-divider {
-    margin: 0 1.25rem;
-  }
-
-  .blog-entry {
-    grid-template-columns: 1fr;
-    gap: 0;
-    padding: 2rem 1.25rem;
-  }
-
-  .blog-entry-text {
-    display: contents;
-  }
-
-  .blog-meta {
-    order: 1;
-  }
-
-  .blog-entry-title {
-    order: 2;
-  }
-
-  .blog-entry-photo {
-    order: 3;
-    display: block;
-    margin-bottom: 1.25rem;
-  }
-
-  .blog-teaser {
-    order: 4;
-  }
-
-  .blog-read-more {
-    order: 5;
-    justify-self: start;
-  }
-
   footer {
     padding: 2.5rem 1.25rem 0;
   }
@@ -2771,12 +2358,40 @@ a.link {
     align-items: flex-start;
   }
 
+  .blog-divider,
+  .staff-divider {
+    margin: 0 1.25rem;
+  }
 
-  /* -- blog post mobile -- */
+  /* Blog entries stack: meta, title, photo, teaser, read-more */
+  .blog-entry {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 2rem 1.25rem;
+  }
+
+  .blog-entry-text {
+    display: contents;
+  }
+
+  .blog-meta { order: 1; }
+  .blog-entry-title { order: 2; }
+
+  .blog-entry-photo {
+    order: 3;
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+
+  .blog-teaser { order: 4; }
+
+  .blog-read-more {
+    order: 5;
+    justify-self: start;
+  }
 
   .post-wrap {
     padding: 2.5rem 1.25rem 4rem;
   }
-
 
 }
