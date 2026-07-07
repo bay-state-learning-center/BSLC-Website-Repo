@@ -1586,19 +1586,24 @@ footer {
   line-height: 1.25;
 }
 
-.fee-display {
+.tuition-aid-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: auto 1fr;
   gap: 1.5rem;
   margin: 2.5rem 0;
+  align-items: stretch;
 }
 
-.fee-card {
+.tuition-total {
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.09);
   border-radius: 3px;
-  padding: 1.75rem 1.5rem;
+  padding: 1.75rem 2rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 220px;
 }
 
 .fee-label {
@@ -1631,7 +1636,6 @@ footer {
   border: 1px solid rgba(232,114,74,0.3);
   border-radius: 3px;
   padding: 2rem 2rem;
-  margin-top: 2.5rem;
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 1.5rem;
@@ -2302,9 +2306,13 @@ footer {
     font-size: 1.6rem;
   }
 
-  .fee-display {
+  .tuition-aid-row {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+
+  .tuition-total {
+    min-width: 0;
   }
 
   .payment-details {
