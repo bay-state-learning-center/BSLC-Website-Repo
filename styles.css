@@ -920,7 +920,7 @@ footer {
 }
 
 .carousel-slide {
-  min-width: 100%;
+  min-width: 0;
   flex-shrink: 0;
   height: 100%;
 }

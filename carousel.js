@@ -80,7 +80,8 @@
     }
 
     function goTo(n) {
-      current = loop ? (n + total) % total : Math.max(0, Math.min(n, maxIndex));
+      var numPositions = maxIndex + 1;
+      current = loop ? (n + numPositions) % numPositions : Math.max(0, Math.min(n, maxIndex));
       track.style.transform = 'translateX(-' + (current * slideWidth()) + 'px)';
       updateControls();
     }
@@ -89,11 +90,11 @@
     function prev() { goTo(current - 1); }
 
     function startAuto() {
+      clearInterval(autoTimer);
       if (!autoplay) return;
       autoTimer = setInterval(next, 4500);
     }
     function resetAuto() {
-      clearInterval(autoTimer);
       startAuto();
     }
 
