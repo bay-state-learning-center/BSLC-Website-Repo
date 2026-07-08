@@ -23,7 +23,7 @@ teaser: At BSLC, teens are given a lot of freedom. A BSLC member can choose to n
 # Optional -- delete both of the next two lines entirely if this post has
 # no hero photo at the top.
 hero_image: guitar-in-class.webp
-hero_alt: Three students and one teacher sit around a table during a seminar. One student plays a guitar during the conversation.
+hero_alt: Three members and one teacher sit around a table during a seminar. One member plays a guitar during the conversation.
 
 # Optional -- only add this if you want the blog listing page's thumbnail
 # to use different alt text than hero_alt above.
@@ -38,7 +38,7 @@ hero_alt: Three students and one teacher sit around a table during a seminar. On
 # slug: your-post-url
 ---
 
-At BSLC, teens are given a lot of freedom. A BSLC member can choose to not attend any classes or activities, if they want to. So what motivates Bay Staters to be active participants in their community? Autonomy alone will not educate a young person, but at BSLC we think it is a prerequisite for any good outcome, be it social, emotional, or educational. And the improvement we often see in the emotional state of new students at BSLC seems to illustrate this idea.
+At BSLC, teens are given a lot of freedom. A BSLC member can choose to not attend any classes or activities, if they want to. So what motivates Bay Staters to be active participants in their community? Autonomy alone will not educate a young person, but at BSLC we think it is a prerequisite for any good outcome, be it social, emotional, or educational. And the improvement we often see in the emotional state of new BSLC members seems to illustrate this idea.
 
 Defined as the right or condition of self-government, autonomy is the thing teens crave the most. At the same time, teens are typically given very little, if any, real freedom or responsibility. Though they might not put it in those words, they are acutely aware of how little control they have over their lives. When they arrive at BSLC and are given autonomy like they have never had before, the rush of exuberant energy is transformative, and many young people "come back to life".
 

@@ -42,18 +42,18 @@ Who attends BSLC? What are the educational backgrounds of BSLC members?
 
 The teens who attend BSLC are a diverse group. What unifies them is a love of learning, combined with a desire for something different from the structure of traditional school. Our members include teens who "excelled" in traditional school, but were bored or anxious; who are neurodivergent, and didn't fit into the typical school structure; who were bullied, or just didn't like the school social scene; or are lifelong homeschoolers looking for more social and academic opportunities.
 
-##The Straight-A Ball of Anxiety
+## The Straight-A Ball of Anxiety
 
 Some of our members seemed to be doing well in traditional school... at least on paper. But behind the scenes, they were constantly worried about their academic performance, and stressed out by the hours of homework they had to complete every night. They longed for a chance to further their education without the stress of high-stakes testing. At BSLC, members can do advanced coursework and work on academically rigorous  projects, with lots of qualitative feedback along the way--and without the burden of being tested and ranked.
 
-##The Neurodivergent Freedom-Seeker
+## The Neurodivergent Freedom-Seeker
 
-Many of our members are also neurodivergent--some have sensory needs and learning styles that traditional schools would not accommodate. At BSLC, we have the opportunity to get to know students well enough to understand their needs and strategize about how to meet them.
+Many of our members are also neurodivergent--some have sensory needs and learning styles that traditional schools would not accommodate. At BSLC, we have the opportunity to get to know members well enough to understand their needs and strategize about how to meet them. I myself went into education in an attempt to be the autistic educator I needed as an autistic child, but quickly found the public education system harmful to my own, and my students', autistic neurology. I then became a tutor and mentor for autistic and neurodivergent youth using my experience in education to develop curricula specific to my students' needs and interests. To that end, I enlist many techniques, including guided movement for students with attention differences, with the intent of fostering a healthy neurodivergent identity.
 
-##The Peace-Seeker
+## The Peace-Seeker
 
 Many of our members also experienced bullying while in school. Bullying is an underappreciated problem, particularly in large schools, and some groups of kids (neurodivergent, LGBTQ+) are especially common targets. At BSLC, we might not have rules against profanity, but we all collectively agree to not use *cruel* language. We're also a small community, in which the staff are aware of dynamics between members, have built trusting relationships with members, and are experienced with conflict management strategies.
 
-##The Enthusiastic Homeschooler
+## The Enthusiastic Homeschooler
 
-Many of our members are lifelong homeschoolers. For many homeschoolers, local homeschool coops are available--but then, when they become teenagers, they might feel "too old" for the coop. At the same time, teen homeschoolers desire to expand their social circles and experiment with more structured, group learning environments--but still without the rigid structures of traditional school. At BSLC, we love working with homeschooling families to strategize about how we can best support a teen's vision for their education.
+Many of our members are lifelong homeschoolers. For many homeschoolers, local homeschool coops are available--but then, when they become teenagers, they might feel "too old" for the coop. At the same time, teen homeschoolers desire to expand their social circles and experiment with more structured, group learning environments--but without the rigidity of traditional school. At BSLC, we love working with homeschooling families to strategize about how we can best support a teen's vision for their education.
