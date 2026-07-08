@@ -8,6 +8,14 @@
                              the how-it-works photo carousel)
      data-mobile-break="640" width (px) below which per-view drops to 1,
                              regardless of data-per-view
+     data-tablet-break="1100" optional. width (px) below which per-view
+                             drops to data-tablet-per-view instead of
+                             jumping straight from 1 to data-per-view.
+                             Omit this attribute entirely to keep the
+                             old two-tier (1 / desktop) behavior.
+     data-tablet-per-view="2" how many slides show in the tablet tier
+                             (default 2, only relevant if data-tablet-break
+                             is set)
      data-autoplay="true"   auto-advance on a timer, pause on hover
                              (default false)
      data-loop="true"       wrap from the last slide back to the first
@@ -41,6 +49,8 @@
     var loop = carousel.dataset.loop === 'true';
     var desktopPerView = parseInt(carousel.dataset.perView || '1', 10);
     var mobileBreak = parseInt(carousel.dataset.mobileBreak || '640', 10);
+    var tabletBreak = carousel.dataset.tabletBreak ? parseInt(carousel.dataset.tabletBreak, 10) : null;
+    var tabletPerView = parseInt(carousel.dataset.tabletPerView || '2', 10);
 
     var current = 0;
     var perView = 1;
@@ -48,7 +58,10 @@
     var autoTimer;
 
     function getPerView() {
-      return window.innerWidth <= mobileBreak ? 1 : desktopPerView;
+      var w = window.innerWidth;
+      if (w <= mobileBreak) return 1;
+      if (tabletBreak && w <= tabletBreak) return tabletPerView;
+      return desktopPerView;
     }
 
     function slideWidth() {
