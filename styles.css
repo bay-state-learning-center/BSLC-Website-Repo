@@ -174,19 +174,20 @@ body.page-blog {
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  text-decoration: none;
-  padding-bottom: 2px;
+  text-decoration-line: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
   align-self: flex-start;
 }
 
 .more-btn-dark {
   color: var(--teal-dark);
-  border-bottom: 1px solid rgba(26,138,138,0.4);
+  text-decoration-color: rgba(26,138,138,0.4);
 }
 
 .more-btn-orange {
   color: var(--orange-dark);
-  border-bottom: 1px solid rgba(192,96,32,0.4);
+  text-decoration-color: rgba(192,96,32,0.4);
 }
 
 /* Same idea, slightly smaller/bolder: enroll steps + calendar footers */
@@ -578,6 +579,29 @@ body.page-volunteer-donate .section-cream-inner p {
   color: var(--ink-body);   /* must restate: outranks the --ink-lead rule above */
   max-width: 640px;
   margin-bottom: 2rem;
+}
+
+/* -- Lists (on cream): same containers as the paragraph rule above,
+      since a bulleted list is just body text with markers. -- */
+
+.split-text ul,
+.pillar-text ul,
+.section-cream-inner ul,
+.visit-step-body ul,
+.donate-text ul {
+  font-size: var(--fs-body);
+  line-height: 1.78;
+  color: var(--ink-body);
+  padding-left: 1.4rem;
+  margin: 1rem 0;
+}
+
+.split-text li,
+.pillar-text li,
+.section-cream-inner li,
+.visit-step-body li,
+.donate-text li {
+  margin-bottom: 0.5rem;
 }
 
 /* -- Split stripes (index: photo + text side by side) -- */
