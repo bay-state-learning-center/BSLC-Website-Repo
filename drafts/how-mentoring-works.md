@@ -12,7 +12,7 @@
 
 title: The Art of Mentoring at BSLC
 date: 2026-07-09
-author: JayJay Mudridge
+author: George Popham
 
 # A 1-2 sentence summary for search engines, under about 160 characters.
 description: How mentoring works at Bay State Learning Center.
@@ -40,7 +40,7 @@ hero_alt: A staff member helps a BSLC member learn how to skateboard.
 
 One-on-one mentoring and advising is a crucial component of our program at BSLC. How does it work?
 
-The student-staff mentoring relationship is perhaps the most important connection a BSLC member will have, but it can’t and won't be rushed. The staff advisor has no particular agenda other than getting to know the student. The advisor builds trust by bringing no expectations to the table and trying to find out what is relevant *to the student*. Then, once the student trusts the advisor and sees them as an advocate who will protect their autonomy, the real work can begin.   
+The member-staff mentoring relationship is perhaps the most important connection a BSLC member will have, but it can’t and won't be rushed. The staff advisor has no particular agenda other than getting to know the new member. The advisor builds trust by bringing no expectations to the table and trying to find out what is relevant *to the teen*. Then, once the member trusts the advisor and sees them as an advocate who will protect their autonomy, the real work can begin.   
 
 ![A staff member and BSLC member drink tea together during a mentoring meeting.](neko-advising.webp)
 
