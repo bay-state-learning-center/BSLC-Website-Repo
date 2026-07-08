@@ -56,4 +56,4 @@ Many of our members also experienced bullying while in school. Bullying is an un
 
 ## The Enthusiastic Homeschooler
 
-Many of our members are lifelong homeschoolers. For many homeschoolers, local homeschool coops are available--but then, when they become teenagers, they might feel "too old" for the coop. At the same time, teen homeschoolers desire to expand their social circles and experiment with more structured, group learning environments--but without the rigidity of traditional school. At BSLC, we love working with homeschooling families to strategize about how we can best support a teen's vision for their education.
+Many of our members are lifelong homeschoolers. For many homeschoolers, local homeschool coops are available. But later, when they become teenagers, they might feel "too old" for the coop. At the same time, teen homeschoolers desire to expand their social circles and experiment with more structured, group learning environments--but without the rigidity of traditional school. At BSLC, we love working with homeschooling families to strategize about how we can best support a teen's vision for their education.
