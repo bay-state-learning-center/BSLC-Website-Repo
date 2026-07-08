@@ -10,7 +10,7 @@
 #      triple hyphen line below, after the front matter.
 #   4. Commit and push. The site rebuilds itself automatically.
 
-title: Who Thives at BSLC?
+title: Who Thrives at BSLC?
 date: 2026-07-07
 author: JayJay Mudridge
 
