@@ -756,6 +756,19 @@ body.page-index .split-text p {
   align-items: start;
 }
 
+/* Grid items default to min-width: auto, which means they refuse to
+   shrink below their content's intrinsic min-content size. The carousel
+   inside .sample-day-intro contains slides with flex-shrink: 0 (set via
+   carousel.js), so without this override the browser tries to give the
+   grid column enough room for every un-shrinkable slide side-by-side —
+   blowing the whole grid (and page) out far past the viewport, especially
+   on mobile. This forces both columns to respect the track's actual
+   computed width instead. */
+.sample-day-intro,
+.sample-day-schedule {
+  min-width: 0;
+}
+
 .sample-day-intro p {
   font-size: var(--fs-body);
   line-height: 1.78;
