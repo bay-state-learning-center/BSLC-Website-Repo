@@ -2316,6 +2316,14 @@ footer {
 
   /* -- ENROLL -- */
 
+  /* body.page-enroll .section-dark (near the top of this file) outranks
+     the generic .section-dark mobile reset above due to higher
+     specificity, so it never picked up the reduced mobile padding.
+     Restated here to match. */
+  body.page-enroll .section-dark {
+    padding: 3rem 1.25rem;
+  }
+
   .steps-section {
     padding: 3rem 1.25rem;
   }
@@ -2390,6 +2398,26 @@ footer {
 
   .donate-photo {
     width: clamp(120px, 40vw, 200px);
+  }
+
+}
+
+
+/* Below 480px, the two tuition/aid number boxes no longer have room to
+   sit side by side — 7-character values like "$14,500" and "$31,825"
+   start overflowing their box at that width (the .tuition-total rule
+   above lets each box shrink below its content's width via
+   min-width: 0, so the digits spill out instead of wrapping, which is
+   what pushes the whole page wider than the viewport on small phones).
+   Reverting to a stacked column here keeps each box full-width instead. */
+@media (max-width: 480px) {
+
+  .tuition-cards {
+    flex-direction: column;
+  }
+
+  .tuition-total {
+    flex: none;
   }
 
 }
