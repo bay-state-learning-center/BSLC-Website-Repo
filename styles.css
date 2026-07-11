@@ -450,6 +450,13 @@ body.page-enroll .section-dark {
   padding: 4.5rem 2.5rem;
 }
 
+/* The classes-calendar page's class-listing section was converted from
+   .section-dark to .section-cream (see CLASSES & CALENDAR below), but
+   keeps the same extra vertical padding the page already used. */
+body.page-classes-calendar .section-cream {
+  padding: 4.5rem 2.5rem;
+}
+
 .section-dark-inner {
   max-width: var(--content-width);
   margin: 0 auto;
@@ -1100,7 +1107,73 @@ footer {
   margin-top: 1rem;
 }
 
-.section-dark-intro {
+/* ---------- KEY DATES (classes-calendar.html) ----------
+   New charcoal stripe between the calendars and the class listings.
+   Reuses .path-card's values (from AFTER BSLC below) for the boxes,
+   since both are dark cards holding short, scannable text on charcoal. */
+
+.dates-categories-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.dates-categories {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.dates-category {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  padding: 1.75rem;
+}
+
+.dates-category-label {
+  margin: 0 0 1rem;
+}
+
+.dates-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.dates-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.dates-when {
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--paper-bright);
+}
+
+.dates-what {
+  font-size: clamp(0.85rem, 0.8rem + 0.15vw, 0.98rem);
+  color: var(--paper-body);
+  line-height: 1.4;
+}
+
+.dates-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--line-dark);
+  margin: 0.55rem 0;
+}
+
+/* ---------- CLASSES & CALENDAR (classes-calendar.html), continued ---------- */
+
+/* Renamed from .section-dark-intro now that this section is cream (see
+   .class-categories-inner below); kept as its own class rather than
+   reusing .section-cream-inner > p because it needs a narrower max-width
+   and larger bottom margin than a standard cream lead paragraph. */
+.classes-intro {
   max-width: 660px;
   margin-bottom: 3rem;
 }
@@ -1116,11 +1189,22 @@ footer {
   gap: 1.5rem;
 }
 
+/* This card now sits on the cream .class-categories-inner section rather
+   than a charcoal one (see below), so it needs its own solid fill instead
+   of the rgba(255,255,255,0.04) tint it used when it was a subtle
+   lightening of a charcoal parent — that tint would be almost invisible
+   on cream. Reusing --charcoal directly keeps everything inside the card
+   (labels, class names, dividers) working unchanged, since as far as
+   those elements are concerned they're still sitting on charcoal. The
+   shadow gives the card definition now that it's a dark shape on a light
+   field rather than a near-match tint on a matching-tone background;
+   value reused from .donate-photo for consistency. */
 .class-category {
-  background: rgba(255,255,255,0.04);
+  background: var(--charcoal);
   border: 1px solid rgba(255,255,255,0.09);
   border-radius: 4px;
   padding: 1.75rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
 }
 
 .class-category-label {
@@ -2245,7 +2329,8 @@ footer {
     aspect-ratio: 3 / 4;
   }
 
-  .class-categories {
+  .class-categories,
+  .dates-categories {
     grid-template-columns: 1fr;
   }
 
@@ -2423,10 +2508,12 @@ footer {
 }
 
 
-/* Between 641 and 960px the class categories drop from 3 columns to 2. */
+/* Between 641 and 960px the class categories (and the new key-dates
+   categories, which use the same 3-column layout) drop to 2 columns. */
 @media (min-width: 641px) and (max-width: 960px) {
 
-  .class-categories {
+  .class-categories,
+  .dates-categories {
     grid-template-columns: 1fr 1fr;
   }
 
@@ -2435,13 +2522,25 @@ footer {
 
 /* The nav and footer collapse at 700px on ALL pages (the blog's
    two-column entry layout also stacks here, so blog pages change all at
-   once). */
+   once). Hamburger menu falls to the right of the Schedule a Visit button. */
 @media (max-width: 700px) {
 
   nav {
     padding: 1rem 1.25rem;
     gap: 0;
   }
+
+  .nav-right {
+  gap: 1rem;
+}
+
+.hamburger {
+  order: 2;
+}
+
+.nav-right .btn-teal {
+  order: 1;
+}
 
   /* The visit page's extra desktop padding (near the top of this file)
      outranks the rule above, so it's reset here to match every other
