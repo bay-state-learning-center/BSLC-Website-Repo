@@ -35,6 +35,12 @@
   /* Surfaces */
   --charcoal:      #2a2d2e;  /* dark page/section background; also headings & text on cream */
   --charcoal-deep: #1e2122;  /* footer, mobile menu */
+  --charcoal-light: #393c3d; /* solid card fill on cream sections — same
+                                 perceived lightness as a 7% white tint
+                                 over --charcoal (used by .dates-category,
+                                 .path-card), so cards read consistently
+                                 whether they're floating on charcoal or
+                                 on cream */
   --cream:         #f0ece3;  /* light section background */
 
   /* Accents */
@@ -1193,14 +1199,16 @@ footer {
    than a charcoal one (see below), so it needs its own solid fill instead
    of the rgba(255,255,255,0.04) tint it used when it was a subtle
    lightening of a charcoal parent — that tint would be almost invisible
-   on cream. Reusing --charcoal directly keeps everything inside the card
-   (labels, class names, dividers) working unchanged, since as far as
-   those elements are concerned they're still sitting on charcoal. The
-   shadow gives the card definition now that it's a dark shape on a light
-   field rather than a near-match tint on a matching-tone background;
-   value reused from .donate-photo for consistency. */
+   on cream. --charcoal-light matches the perceived lightness of the
+   .dates-category cards above (7% white over charcoal), so the two
+   stripes of cards read as the same grey rather than two different
+   darks, and everything inside the card (labels, class names, dividers)
+   keeps working unchanged since the contrast against its own background
+   barely shifts. The shadow gives the card definition now that it's a
+   dark shape on a light field rather than a tint on a matching-tone
+   background; value reused from .donate-photo for consistency. */
 .class-category {
-  background: var(--charcoal);
+  background: var(--charcoal-light);
   border: 1px solid rgba(255,255,255,0.09);
   border-radius: 4px;
   padding: 1.75rem;
