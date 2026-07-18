@@ -82,8 +82,8 @@ BLOG_INDEX_PATH = Path("blog.html")
 SITE_URL = "https://www.baystatelearning.org"
 
 # Used as the social-preview image for any post with no hero_image set.
-DEFAULT_OG_IMAGE = "home-01-bslc-logo.webp"
-DEFAULT_OG_IMAGE_ALT = "Bay State Learning Center logo"
+DEFAULT_OG_IMAGE = "og-image.png"
+DEFAULT_OG_IMAGE_ALT = "Bay State Learning Center logo on a charcoal background"
 
 START_MARKER = "<!-- POSTS START -->"
 END_MARKER = "<!-- POSTS END -->"
