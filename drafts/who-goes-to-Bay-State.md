@@ -50,13 +50,13 @@ Some of our members seemed to be doing well in traditional school... at least on
 
 Many of our members are also neurodivergent--some have sensory needs and learning styles that traditional schools would not accommodate. At BSLC, we have the opportunity to get to know members well enough to understand their needs and strategize about how to meet them. I myself went into education in an attempt to be the autistic educator I needed as an autistic child, but quickly found the public education system harmful to my own, and my students', autistic neurology. I then became a tutor and mentor for autistic and neurodivergent youth using my experience in education to develop curricula specific to my students' needs and interests. To that end, I enlist many techniques, including guided movement for students with attention differences, with the intent of fostering a healthy neurodivergent identity.
 
-## The Peace-Seeker
-
-Many of our members also experienced bullying while in school. Bullying is an underappreciated problem, particularly in large schools, and some groups of kids (neurodivergent, LGBTQ+) are especially common targets. At BSLC, we might not have rules against profanity, but we all collectively agree to not use *cruel* language. We're also a small community, in which the staff are aware of dynamics between members, have built trusting relationships with members, and are experienced with conflict management strategies.
-
 ## The Enthusiastic Homeschooler
 
 Many of our members are lifelong homeschoolers. For many homeschoolers, local homeschool coops are available. But later, when they become teenagers, they might feel "too old" for the coop. At the same time, teen homeschoolers desire to expand their social circles and experiment with more structured, group learning environments--but without the rigidity of traditional school. At BSLC, we love working with homeschooling families to strategize about how we can best support a teen's vision for their education.
+
+## The Peace-Seeker
+
+Many of our members also experienced bullying while in school. Bullying is an underappreciated problem, particularly in large schools, and some groups of kids (neurodivergent, LGBTQ+) are especially common targets. At BSLC, we might not have rules against profanity, but we all collectively agree to not use *cruel* language. We're also a small community, in which the staff are aware of dynamics between members, have built trusting relationships with members, and are experienced with conflict management strategies.
 
 ## The Freed-Up Free Spirit
 
