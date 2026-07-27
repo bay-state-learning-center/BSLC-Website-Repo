@@ -32,6 +32,11 @@ Usage:
   python optimize_images.py --src ./images --dry-run
   python optimize_images.py --src ./images              # overwrites in place
 
+  # Target just one new photo instead of the whole folder (matches
+  # against the relative path, same as the RULES matching does):
+  python optimize_images.py --src ./images --only new-blog-photo.webp --dry-run
+  python optimize_images.py --src ./images --only new-blog-photo.webp
+
 Requires: pip install Pillow
 """
 
@@ -154,6 +159,10 @@ def main():
     parser.add_argument("--src", required=True, help="Source directory of images")
     parser.add_argument("--out", help="Write to a separate directory instead of overwriting in place (optional -- useful for a first look before committing to in-place edits)")
     parser.add_argument("--dry-run", action="store_true", help="Report matched rules and sizes, change nothing")
+    parser.add_argument("--only", default=None,
+                         help="Only process images whose relative path contains this substring "
+                              "(case-insensitive). Handy for one new photo instead of the whole "
+                              "folder, e.g. --only new-blog-photo.webp")
     args = parser.parse_args()
 
     src_dir = Path(args.src)
@@ -167,8 +176,14 @@ def main():
     total_after = 0
     count = 0
 
+    only = args.only.lower() if args.only else None
+
     for path in sorted(src_dir.rglob("*.webp")):
         rel = path.relative_to(src_dir)
+
+        if only and only not in str(rel).lower():
+            continue
+
         rule_name, mw, mh, q = rule_for(rel)
 
         if args.dry_run:
@@ -196,7 +211,10 @@ def main():
 
     print()
     if count == 0:
-        print("No .webp images found under", src_dir)
+        if only:
+            print(f"No .webp images matching --only '{args.only}' found under {src_dir}")
+        else:
+            print("No .webp images found under", src_dir)
     elif args.dry_run:
         print(f"{count} images, total {human(total_before)}")
     else:
