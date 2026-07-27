@@ -22,8 +22,8 @@ teaser: Who attends BSLC? What are the educational backgrounds of BSLC members?
 
 # Optional -- delete both of the next two lines entirely if this post has
 # no hero photo at the top.
-hero_image: kids-on-fence.webp
-hero_alt: Four teenagers pose for a picture while sitting outside on a fence.
+hero_image: kids-fishing.webp
+hero_alt: Teenagers pose for a picture while fishing.
 
 # Optional -- only add this if you want the blog listing page's thumbnail
 # to use different alt text than hero_alt above.
