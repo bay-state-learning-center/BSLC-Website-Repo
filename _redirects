@@ -1,0 +1,26 @@
+# Redirects for baystatelearning.org — WordPress to Netlify migration
+# Format: /old-path  /new-path  301
+# Note: apex-domain and http->https normalization are handled by Netlify's
+# primary domain setting, not listed here.
+
+# Renamed / restructured pages
+/visit/                         /visit                301
+/meet-the-team/                 /about-us             301
+/join/                          /enroll               301
+/class-calendar/                /classes-calendar     301
+/how-it-works/                  /how-it-works         301
+/tuition/                       /enroll               301
+/tuition                        /enroll               301
+/volunteer/                     /volunteer-donate     301
+/after-bslc/                    /after-bslc           301
+/donate-2/                      /volunteer-donate     301
+/donate                         /volunteer-donate     301
+/donate-                        /volunteer-donate     301
+/donate/                        /volunteer-donate     301
+/staff-and-board/               /about-us             301
+/wish-list/                     /volunteer-donate     301
+
+# Pages cut from the new site (resource-listing pages) — sent to homepage
+/other-maker-programs/          /                     301
+/informal-learning-resources/   /                     301
+/external-resources/            /                     301
