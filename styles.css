@@ -558,7 +558,6 @@ body.page-visit .section-cream-inner h2 {
 }
 
 body.page-volunteer-donate .section-dark-inner p {
-  max-width: 640px;
   margin-bottom: 2rem;
 }
 
@@ -590,7 +589,6 @@ body.page-volunteer-donate .section-dark-inner p {
 
 body.page-volunteer-donate .section-cream-inner p {
   color: var(--ink-body);   /* must restate: outranks the --ink-lead rule above */
-  max-width: 640px;
   margin-bottom: 2rem;
 }
 
