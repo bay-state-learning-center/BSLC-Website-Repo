@@ -1652,10 +1652,6 @@ footer {
   color: var(--ink-lead);
 }
 
-.steps-intro p {
-  max-width: 640px;
-}
-
 .steps-list {
   display: flex;
   flex-direction: column;
