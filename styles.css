@@ -1175,10 +1175,13 @@ footer {
 
 /* Renamed from .section-dark-intro now that this section is cream (see
    .class-categories-inner below); kept as its own class rather than
-   reusing .section-cream-inner > p because it needs a narrower max-width
-   and larger bottom margin than a standard cream lead paragraph. */
+   reusing .section-cream-inner > p because it needs a larger bottom
+   margin than a standard cream lead paragraph before the category
+   grid starts. Width matches the standard content column via the
+   parent .section-cream-inner (var(--content-width), 860px) -- no
+   max-width override here, so it lines up with paragraph width
+   elsewhere on the site (e.g. After BSLC). */
 .classes-intro {
-  max-width: 660px;
   margin-bottom: 3rem;
 }
 
