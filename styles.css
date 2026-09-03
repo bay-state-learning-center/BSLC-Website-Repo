@@ -253,7 +253,7 @@ nav {
 
 /* Visit page has no "Schedule a visit" button in the nav, so it gets
    extra padding on desktop to keep the bar the same height as the
-   other pages. The matching mobile reset lives in the 700px media
+   other pages. The matching mobile reset lives in the 900px media
    query at the bottom of the file, since at phone widths every page
    just shows the hamburger and this compensation no longer applies. */
 body.page-visit nav {
@@ -2235,8 +2235,8 @@ footer {
 
 @media (max-width: 640px) {
 
-  /* Nav and footer mobile rules live in the 700px block at the bottom
-     of this file — they collapse at 700px on every page. */
+  /* Nav and footer mobile rules live in the 900px block at the bottom
+     of this file — they collapse at 900px on every page. */
 
   /* -- shared hero / sections -- */
 
@@ -2258,38 +2258,9 @@ footer {
     padding: 3rem 1.25rem;
   }
 
-  /* -- stripes stack; text always comes before the photo -- */
-
-  .split-stripe {
-    grid-template-columns: 1fr;
-    margin-top: 2rem;
-  }
-
-  .split-stripe .split-text { order: 1; }
-  .split-stripe .split-photo { order: 2; }
-
-  .split-photo img {
-    min-height: 260px;
-  }
-
-  .split-text {
-    padding: 2rem 1.25rem;
-  }
-
-  .pillar-stripe {
-    grid-template-columns: 1fr;
-  }
-
-  .pillar-stripe .pillar-text { order: 1; }
-  .pillar-stripe .pillar-photo { order: 2; }
-
-  .pillar-photo img {
-    min-height: 260px;
-  }
-
-  .pillar-text {
-    padding: 2rem 1.25rem;
-  }
+  /* split-stripe and pillar-stripe stacking rules live in the 900px
+     block near the bottom of this file now, matching the nav's own
+     breakpoint — see the note there for why. */
 
   .testimonials {
     padding: 3rem 1.25rem;
@@ -2525,10 +2496,60 @@ footer {
 }
 
 
-/* The nav and footer collapse at 700px on ALL pages (the blog's
+/* The nav and footer collapse at 900px on ALL pages (the blog's
    two-column entry layout also stacks here, so blog pages change all at
-   once). Hamburger menu falls to the right of the Schedule a Visit button. */
-@media (max-width: 700px) {
+   once). Hamburger menu falls to the right of the Schedule a Visit button.
+
+   900px, not something tighter, because the nav's own content (logo +
+   all 7 links + the Schedule a Visit button) stops fitting on one line
+   somewhere around 820-830px depending on the font actually rendering —
+   so the breakpoint needs real headroom above that, or there's a dead
+   zone above the old 700px value where the nav is too wide for its
+   own container but hasn't collapsed to the hamburger yet. That's what
+   caused the horizontal-scroll bug: the nav links would get squeezed
+   and wrap word-by-word, and since the Schedule a Visit button doesn't
+   shrink, it got pushed past the edge of the viewport, dragging the
+   whole page wider than the screen.
+
+   split-stripe and pillar-stripe (below) are two-column layouts that
+   need to stack at this same point for the same reason: if they
+   stack at a narrower width than the nav collapses at, you get a
+   two-column grid squeezed into a viewport that's already narrow
+   enough to trigger the mobile nav. */
+@media (max-width: 900px) {
+
+  /* -- stripes stack; text always comes before the photo -- */
+
+  .split-stripe {
+    grid-template-columns: 1fr;
+    margin-top: 2rem;
+  }
+
+  .split-stripe .split-text { order: 1; }
+  .split-stripe .split-photo { order: 2; }
+
+  .split-photo img {
+    min-height: 260px;
+  }
+
+  .split-text {
+    padding: 2rem 1.25rem;
+  }
+
+  .pillar-stripe {
+    grid-template-columns: 1fr;
+  }
+
+  .pillar-stripe .pillar-text { order: 1; }
+  .pillar-stripe .pillar-photo { order: 2; }
+
+  .pillar-photo img {
+    min-height: 260px;
+  }
+
+  .pillar-text {
+    padding: 2rem 1.25rem;
+  }
 
   nav {
     padding: 1rem 1.25rem;
