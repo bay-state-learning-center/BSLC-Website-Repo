@@ -33,4 +33,5 @@
 /posts/makers-showcase.html                /posts/makers-showcase                301
 
 # Tagged URLS
-/hometown  /?utm_source=hometownweekly&utm_medium=print&utm_campaign=eduguide-fall2026               302
+/hometown /?utm_source=hometownweekly&utm_medium=print&utm_campaign=eduguide-fall2026&utm_content=hometown 302
+/built-around-you /?utm_source=hometownweekly&utm_medium=print&utm_campaign=eduguide-fall2026&utm_content=built-around-you 302
