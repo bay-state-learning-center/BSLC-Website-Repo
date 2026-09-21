@@ -11,7 +11,7 @@
 #   4. Commit and push. The site rebuilds itself automatically.
 
 title: BSLC Photography
-date: 2026-07-07
+date: 2026-09-21
 author: Terry Louison
 
 # A 1-2 sentence summary for search engines, under about 160 characters.
