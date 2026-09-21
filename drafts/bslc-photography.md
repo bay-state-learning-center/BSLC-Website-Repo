@@ -22,7 +22,7 @@ teaser: I joined Bay State in 2018 to teach photography, and I am amazed by all 
 
 # Optional -- delete both of the next two lines entirely if this post has
 # no hero photo at the top.
-hero_image: Eye Double Exposure 2499.webp
+hero_image: Eye-Double-Exposure-2499.webp
 hero_alt: Abstract picture of an eye with double exposure.
 
 # Optional -- only add this if you want the blog listing page's thumbnail
