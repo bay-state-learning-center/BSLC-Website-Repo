@@ -48,10 +48,10 @@ I joined Bay State in 2018 to teach photography, and I am amazed by all the beau
 
 "Sunset" by Simon Colao
 
-![Abstract picture of an eye with double exposure](Eye Double Exposure 2499.webp)
+![Abstract picture of an eye with double exposure](Eye-Double-Exposure-2499.webp)
 
 "Eye Double Exposure" by Willa Bellon
 
-![Leaves reflecting in a tilted window](grey window.webp)
+![Leaves reflecting in a tilted window](grey-window.webp)
 
 "Window" by Grey Collazo
