@@ -42,16 +42,16 @@ I joined Bay State in 2018 to teach photography, and I am amazed by all the beau
 
 ![A woman sits on the steps of the Dedham courthouse](archy-photo-steps.webp)
 
-Courthouse Steps by Archy Maquire
+"Courthouse Steps" by Archy Maquire
 
 ![Electrical poles against a pink sunset](simon-sunset.webp)
 
-Sunset by Simon Colao
+"Sunset" by Simon Colao
 
 ![Abstract picture of an eye with double exposure](Eye Double Exposure 2499.webp)
 
-Eye Double Exposure by Willa Bellon
+"Eye Double Exposure" by Willa Bellon
 
 ![Leaves reflecting in a tilted window](grey window.webp)
 
-Window by Grey Collazo
+"Window" by Grey Collazo
