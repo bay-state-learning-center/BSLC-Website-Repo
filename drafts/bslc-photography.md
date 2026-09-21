@@ -40,14 +40,14 @@ hero_alt: Abstract picture of an eye with double exposure.
 
 I joined Bay State in 2018 to teach photography, and I am amazed by all the beautiful work our students have created over the years! Our classes are small, so I'm able to work closely with each student to help them refine and execute their ideas.  The students in turn are able to spend most of their time creating, experimenting, and growing as artists. Their work speaks for itself.
 
-![A woman sits on the steps of the Dedham courthouse.](archy-photo-steps.webp)
+![A woman sits on the steps of the Dedham courthouse](archy-photo-steps.webp)
 Courthouse Steps by Archy Maquire
 
-![Electrical poles against a pink sunset].(simon-sunset.webp)
+![Electrical poles against a pink sunset](simon-sunset.webp)
 Sunset by Simon Colao
 
-![Abstract picture of an eye with double exposure.](Eye Double Exposure 2499.webp)
+![Abstract picture of an eye with double exposure](Eye Double Exposure 2499.webp)
 Eye Double Exposure by Willa Bellon
 
-![Leaves reflecting in a tilted window.](grey window.webp)
+![Leaves reflecting in a tilted window](grey window.webp)
 Window by Grey Collazo
