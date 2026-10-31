@@ -8,6 +8,7 @@ you add new photos.
 
 SETUP (one-time):
     pip install Pillow
+    pip install pillow-heif   # optional, only needed to read .heic/.heif files
 
 USAGE:
     python3 convert_to_webp.py /path/to/images
@@ -39,6 +40,16 @@ except ImportError:
 
 SOURCE_EXTENSIONS = {".jpg", ".jpeg", ".png"}
 
+# HEIC/HEIF support is optional -- iPhones save photos in this format, but
+# Pillow can't read it without an extra decoder library. If pillow-heif
+# isn't installed, we just skip .heic/.heif files instead of crashing.
+try:
+    import pillow_heif
+    pillow_heif.register_heif_opener()
+    SOURCE_EXTENSIONS |= {".heic", ".heif"}
+except ImportError:
+    pillow_heif = None
+
 
 def human_size(num_bytes: int) -> str:
     size = float(num_bytes)
@@ -54,6 +65,13 @@ def convert_folder(root: Path, quality: int, overwrite: bool, max_width: int | N
         p for p in root.rglob("*")
         if p.is_file() and p.suffix.lower() in SOURCE_EXTENSIONS
     ]
+
+    if pillow_heif is None:
+        heic_files = [p for p in root.rglob("*") if p.suffix.lower() in (".heic", ".heif")]
+        if heic_files:
+            print(f"Note: found {len(heic_files)} HEIC/HEIF file(s) but pillow-heif "
+                  f"isn't installed, so they'll be skipped. Run: pip install pillow-heif")
+            print()
 
     if not source_files:
         print(f"No JPEG/PNG images found under {root}")

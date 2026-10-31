@@ -1,0 +1,37 @@
+# Redirects for baystatelearning.org — WordPress to Netlify migration
+# Format: /old-path  /new-path  301
+# Note: apex-domain and http->https normalization are handled by Netlify's
+# primary domain setting, not listed here — see chat notes.
+
+# Renamed / restructured pages
+/visit/                         /visit                301
+/meet-the-team/                 /about-us             301
+/join/                          /enroll               301
+/class-calendar/                /classes-calendar     301
+/how-it-works/                  /how-it-works         301
+/tuition/                       /enroll               301
+/tuition                        /enroll               301
+/volunteer/                     /volunteer-donate     301
+/after-bslc/                    /after-bslc           301
+/donate-2/                      /volunteer-donate     301
+/donate                         /volunteer-donate     301
+/donate-                        /volunteer-donate     301
+/donate/                        /volunteer-donate     301
+/staff-and-board/               /about-us             301
+/wish-list/                     /volunteer-donate     301
+
+# Pages cut from the new site (resource-listing pages) — sent to homepage
+/other-maker-programs/          /                     301
+/informal-learning-resources/   /                     301
+/external-resources/            /                     301
+
+# Blog posts: dropping .html to match the site-wide clean-URL convention
+/posts/the-art-of-mentoring-at-bslc.html   /posts/the-art-of-mentoring-at-bslc   301
+/posts/who-thrives-at-bslc.html            /posts/who-thrives-at-bslc            301
+/posts/trusting-teens-with-freedom.html    /posts/trusting-teens-with-freedom    301
+/posts/engagement-survey.html              /posts/engagement-survey              301
+/posts/makers-showcase.html                /posts/makers-showcase                301
+
+# Tagged URLS
+/hometown /?utm_source=hometownweekly&utm_medium=print&utm_campaign=eduguide-fall2026&utm_content=hometown 302
+/built-around-you /?utm_source=hometownweekly&utm_medium=print&utm_campaign=eduguide-fall2026&utm_content=built-around-you 302

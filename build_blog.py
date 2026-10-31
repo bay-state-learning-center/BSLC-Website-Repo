@@ -201,7 +201,7 @@ def render_post_html(meta, body_html, template_text, slug):
         og_image, og_image_alt = DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_ALT
 
     page_title = meta.get("page_title") or meta["title"]
-    post_url = f"{SITE_URL}/posts/{slug}.html"
+    post_url = f"{SITE_URL}/posts/{slug}"
     og_image_url = f"{SITE_URL}/images/{og_image}"
 
     html = template_text
@@ -238,10 +238,10 @@ def render_index_entry(meta, slug, is_first):
         f'        <span class="blog-date">{format_date(meta["date"])}</span>\n'
         '      </div>\n'
         '      <h2 class="blog-entry-title">\n'
-        f'        <a href="posts/{slug}.html">{meta["title"]}</a>\n'
+        f'        <a href="posts/{slug}">{meta["title"]}</a>\n'
         '      </h2>\n'
         f'      <p class="blog-teaser">{meta["teaser"]}</p>\n'
-        f'      <a class="blog-read-more" href="posts/{slug}.html">Read more</a>\n'
+        f'      <a class="blog-read-more" href="posts/{slug}">Read more</a>\n'
         '    </div>\n'
         f'{photo_block}\n'
         '  </article>'
