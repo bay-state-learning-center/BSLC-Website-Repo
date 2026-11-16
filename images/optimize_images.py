@@ -29,13 +29,24 @@ no HTML changes needed). Back up your images folder yourself before
 running for real; there's no undo.
 
 Usage:
-  python optimize_images.py --src ./images --dry-run
-  python optimize_images.py --src ./images              # overwrites in place
+  python3 optimize_images.py --src ./images --dry-run
+  python3 optimize_images.py --src ./images              # overwrites in place
 
-  # Target just one new photo instead of the whole folder (matches
-  # against the relative path, same as the RULES matching does):
-  python optimize_images.py --src ./images --only new-blog-photo.webp --dry-run
-  python optimize_images.py --src ./images --only new-blog-photo.webp
+  # Target just one new photo instead of the whole folder:
+  python3 optimize_images.py --src ./images --only new-blog-photo.webp --dry-run
+  python3 optimize_images.py --src ./images --only new-blog-photo.webp
+
+  # Or several at once -- list as many as you like after --only:
+  python3 optimize_images.py --src ./images --only photo1.webp photo2.webp photo3.webp --dry-run
+
+  # --only matches WHOLE file names, not substrings (unlike RULES).
+  # "team.webp" matches team.webp in any subfolder, but NOT old-team.webp.
+  # Case-insensitive. To narrow to one folder, include it: blog/team.webp
+  # To match several on purpose, use * as a wildcard: "carousel*"
+  # (quote it so your shell doesn't expand it first).
+  #
+  # The dry run also warns if an --only value matched more than one image
+  # (e.g. team.webp exists in two folders), or matched nothing (a typo).
 
 Requires: pip install Pillow
 """
@@ -43,7 +54,7 @@ Requires: pip install Pillow
 import argparse
 import io
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 from PIL import Image
 
@@ -159,10 +170,10 @@ def main():
     parser.add_argument("--src", required=True, help="Source directory of images")
     parser.add_argument("--out", help="Write to a separate directory instead of overwriting in place (optional -- useful for a first look before committing to in-place edits)")
     parser.add_argument("--dry-run", action="store_true", help="Report matched rules and sizes, change nothing")
-    parser.add_argument("--only", default=None,
-                         help="Only process images whose relative path contains this substring "
-                              "(case-insensitive). Handy for one new photo instead of the whole "
-                              "folder, e.g. --only new-blog-photo.webp")
+    parser.add_argument("--only", nargs="+", default=None, metavar="NAME",
+                         help="Only process images with these exact file names (case-insensitive; "
+                              "may include a folder, e.g. blog/team.webp, or * wildcards, e.g. "
+                              "'carousel*'). e.g. --only photo1.webp photo2.webp")
     args = parser.parse_args()
 
     src_dir = Path(args.src)
@@ -176,13 +187,24 @@ def main():
     total_after = 0
     count = 0
 
-    only = args.only.lower() if args.only else None
+    only = [s.lower() for s in args.only] if args.only else None
+    # How many images each --only value matched, to catch typos and
+    # unexpected duplicates.
+    only_hits = {s: 0 for s in only} if only else {}
 
     for path in sorted(src_dir.rglob("*.webp")):
         rel = path.relative_to(src_dir)
 
-        if only and only not in str(rel).lower():
-            continue
+        if only:
+            # PurePosixPath.match compares whole path components from the
+            # right: "team.webp" matches "blog/team.webp" but not
+            # "old-team.webp"; "blog/team.webp" requires that folder too.
+            rel_lower = PurePosixPath(rel.as_posix().lower())
+            matched = [s for s in only if rel_lower.match(s)]
+            if not matched:
+                continue
+            for s in matched:
+                only_hits[s] += 1
 
         rule_name, mw, mh, q = rule_for(rel)
 
@@ -210,9 +232,16 @@ def main():
         print(f"{rel} [{rule_name}]: {human(before)} -> {human(after)}  ({pct:.0f}% smaller) {note}")
 
     print()
+    if only:
+        for s, n in only_hits.items():
+            if n == 0:
+                print(f"  ! --only '{s}' matched nothing (typo?)", file=sys.stderr)
+            elif n > 1:
+                print(f"  ! --only '{s}' matched {n} images -- check that's intended", file=sys.stderr)
+
     if count == 0:
         if only:
-            print(f"No .webp images matching --only '{args.only}' found under {src_dir}")
+            print(f"No .webp images matching --only {' '.join(args.only)} found under {src_dir}")
         else:
             print("No .webp images found under", src_dir)
     elif args.dry_run:
