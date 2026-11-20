@@ -44,6 +44,6 @@ Transitions is a class where students focus on life beyond their time at Bay Sta
 
 Check back soon for another peek into a class at BSLC, and please don’t hesitate to reach out to [info@baystatelearning.org](mailto:info@baystatelearning.org) with any questions or anything specific you’d like to see!
 
-–Brian Fey
+–Brian
 
 ![Students smile while they work on their paragraphs with a staff member](smiling_about_paragraphs.webp)
