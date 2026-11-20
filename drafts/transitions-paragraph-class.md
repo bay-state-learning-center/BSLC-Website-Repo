@@ -18,7 +18,7 @@ author: Brian Fey
 description: BSLC students in Transitions explored the building blocks of writing, crafting paragraphs on everything from favorite shows to life as a woodland creature.
 
 # The preview text shown on the main blog page.
-teaser: This week in Transitions, students tackled the humble paragraph, writing about everything from their favorite shows to imagining life as a woodland creature.
+teaser: Last week in Transitions, students tackled the humble paragraph, writing about everything from their favorite shows to imagining life as a woodland creature.
 
 # Optional -- delete both of the next two lines entirely if this post has
 # no hero photo at the top.
