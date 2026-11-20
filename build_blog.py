@@ -41,7 +41,8 @@ DRAFT FILE FORMAT (drafts/your-post-name.md):
     Your post body, written in Markdown.
 
     Supported: paragraphs, **bold**, *italic* (or _italic_), ## and ###
-    headings, "- " bulleted lists, and images as their own paragraph:
+    headings, "- " bulleted lists, links like [text](https://...) or
+    [email](mailto:someone@example.org), and images as their own paragraph:
 
     ![Alt text for the image](filename.webp "Optional caption")
 
@@ -130,11 +131,15 @@ def format_date(iso_date):
     return f"{dt.strftime('%B')} {dt.day}, {dt.year}"
 
 
+LINK_RE = re.compile(r'(?<!!)\[([^\]]+)\]\(([^\s)]+)\)')
+
+
 def inline_format(text):
-    """Bold/italic within a line. Anything else (including raw HTML) passes through."""
+    """Bold/italic/links within a line. Anything else (including raw HTML) passes through."""
     text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
     text = re.sub(r"(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)", r"<em>\1</em>", text)
     text = re.sub(r"(?<!\w)_(.+?)_(?!\w)", r"<em>\1</em>", text)
+    text = LINK_RE.sub(r'<a href="\2">\1</a>', text)
     return text
 
 
@@ -149,8 +154,9 @@ def is_list_block(block):
 def render_body(markdown_body):
     """Small Markdown -> HTML converter tailored to this site's post template.
 
-    Supports paragraphs, **bold**, *italic*/_italic_, ## and ### headings,
-    "- " bulleted lists, and ![alt](file.webp "caption") images.
+    Supports paragraphs, **bold**, *italic*/_italic_, [text](url) links,
+    ## and ### headings, "- " bulleted lists, and ![alt](file.webp "caption")
+    images.
 
     Anything else — a linked image, an embedded PDF link, a custom <figure>,
     or any markup this parser doesn't cover — can be written as raw HTML
