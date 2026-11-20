@@ -22,7 +22,7 @@ teaser: Last week we had our Fall Community Night, complete with costumes, snack
 
 # Optional -- delete both of the next two lines entirely if this post has
 # no hero photo at the top.
-hero_image: pumpkin_halloween.webp
+hero_image: pumpkin_community_night.webp
 hero_alt: A BSLC student dressed as the headless horseman, with a beautiful handmade pumpkin-head.
 
 # Optional -- only add this if you want the blog listing page's thumbnail
@@ -49,6 +49,8 @@ See you again in a couple of weeks with another update!
 ![A BSLC student dressed up for Halloween](jacob_halloween.webp)
 
 ![A BSLC student dressed up for Halloween](vin_halloween.webp)
+
+![A BSLC student dressed up for Halloween](pumpkin_halloween.webp)
 
 ![A BSLC student dressed up for Halloween](zero_halloween.webp)
 
